@@ -1,0 +1,3 @@
+rootProject.name = 'PxpTimeMobile'
+
+include ':app'

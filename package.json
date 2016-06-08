@@ -1,0 +1,21 @@
+{
+  "name": "PxpTimeMobile",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start"
+  },
+  "dependencies": {
+    "lodash": "^4.11.1",
+    "moment": "^2.13.0",
+    "node-stopwatch": "0.0.1",
+    "query-string": "^4.1.0",
+    "react": "^0.14.8",
+    "react-native": "^0.24.1",
+    "react-native-progress": "^2.2.2",
+    "react-native-redux-router": "^1.0.6",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2",
+    "redux-thunk": "^2.0.1"
+  }
+}
