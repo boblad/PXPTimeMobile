@@ -12,6 +12,7 @@
     "query-string": "^4.1.0",
     "react": "^0.14.8",
     "react-native": "^0.24.1",
+    "react-native-linear-gradient": "^1.5.10",
     "react-native-progress": "^2.2.2",
     "react-native-redux-router": "^1.0.6",
     "react-redux": "^4.4.5",

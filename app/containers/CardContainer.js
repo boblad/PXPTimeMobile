@@ -15,6 +15,7 @@ import TopBar from '../components/TopBar';
 import Loader from '../components/Loader';
 import Success from '../components/alerts/Success';
 import Failure from '../components/alerts/Failure';
+import LinearGradient from 'react-native-linear-gradient';
 import React, {
   StyleSheet,
   Component,
@@ -37,8 +38,6 @@ const normalizeTime = (time) => {
 class CardContainer extends Component {
   constructor() {
     super();
-    this.handleCardClick = this.handleCardClick.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.tick = this.tick.bind(this);
@@ -47,7 +46,6 @@ class CardContainer extends Component {
     this.handleTimeTextChange = this.handleTimeTextChange.bind(this);
     this.hideModalClick = this.hideModalClick.bind(this);
     this.state = {
-      searchValue: '',
       stopWatch:'',
       timer: '00:00:00',
       startTime: null,
@@ -63,12 +61,6 @@ class CardContainer extends Component {
       stopWatch: '',
       isRunning: false,
       plainTime: null
-    })
-  }
-
-  handleSearchChange(text) {
-    this.setState({
-      searchValue: text
     })
   }
 
@@ -139,49 +131,51 @@ class CardContainer extends Component {
           this.props.message.successMessage &&
           <Success hideModalClick={this.hideModalClick} />
         }
-        <TopBar title="Timer" onBackClick={() => { this.props.router.pop() }}/>
-        {
-          cards.selectedCard &&
-          <View style={styles.row}>
-            <Card card={cards.selectedCard} onCardClick={() => {}}/>
-          </View>
-        }
-        {
-          cards.selectedCard &&
-          <View style={styles.cardView}>
-            <View style={forms.timerInputWrap}>
-              <TextInput
-                style={forms.timerInput}
-                value={this.state.timer}
-                onChangeText={this.handleTimeTextChange}/>
+        <LinearGradient colors={['#000000', '#CCCCCC']} style={styles.linearGradient}>
+          <TopBar title="Timer" onBackClick={() => { this.props.router.pop() }}/>
+          {
+            cards.selectedCard &&
+            <View style={styles.row}>
+              <Card card={cards.selectedCard} onCardClick={() => {}}/>
             </View>
-            <View style={buttonStyles.timerButtonWrap}>
-              <TouchableOpacity style={buttonStyles.submitButton} onPress={this.handleSubmit}>
-                <Text style={buttonStyles.buttonText}>Submit</Text>
-              </TouchableOpacity>
-              {
-                !this.state.isRunning &&
-                <TouchableOpacity style={buttonStyles.startButton} onPress={this.handleStart}>
-                  <Text style={buttonStyles.buttonText}>Start</Text>
+          }
+          {
+            cards.selectedCard &&
+            <View style={styles.cardView}>
+              <View style={forms.timerInputWrap}>
+                <TextInput
+                  style={forms.timerInput}
+                  value={this.state.timer}
+                  onChangeText={this.handleTimeTextChange}/>
+              </View>
+              <View style={buttonStyles.timerButtonWrap}>
+                <TouchableOpacity style={buttonStyles.submitButton} onPress={this.handleSubmit}>
+                  <Text style={buttonStyles.buttonText}>Submit</Text>
                 </TouchableOpacity>
-              }
-              {
-                this.state.isRunning &&
-                <TouchableOpacity style={buttonStyles.stopButton} onPress={this.handleStop}>
-                  <Text style={buttonStyles.buttonText}>Stop</Text>
-                </TouchableOpacity>
-              }
+                {
+                  !this.state.isRunning &&
+                  <TouchableOpacity style={buttonStyles.startButton} onPress={this.handleStart}>
+                    <Text style={buttonStyles.buttonText}>Start</Text>
+                  </TouchableOpacity>
+                }
+                {
+                  this.state.isRunning &&
+                  <TouchableOpacity style={buttonStyles.stopButton} onPress={this.handleStop}>
+                    <Text style={buttonStyles.buttonText}>Stop</Text>
+                  </TouchableOpacity>
+                }
+              </View>
+              <View style={buttonStyles.timerButtonWrap}>
+                {
+                  (this.state.timer !== "00:00:00" && this.state.isRunning === false) &&
+                  <TouchableOpacity style={buttonStyles.submitButton} onPress={this.handleClearTime}>
+                    <Text style={buttonStyles.buttonText}>Reset</Text>
+                  </TouchableOpacity>
+                }
+              </View>
             </View>
-            <View style={buttonStyles.timerButtonWrap}>
-              {
-                (this.state.timer !== "00:00:00" && this.state.isRunning === false) &&
-                <TouchableOpacity style={buttonStyles.submitButton} onPress={this.handleClearTime}>
-                  <Text style={buttonStyles.buttonText}>Reset</Text>
-                </TouchableOpacity>
-              }
-            </View>
-          </View>
-        }
+          }
+        </LinearGradient>
         <Menu router={this.props.router}/>
       </View>
     );
@@ -205,11 +199,6 @@ class CardContainer extends Component {
       card_apikey: selectedCard.public.apikey
     }
     dispatch(createEntry(user.asyncKey, body));
-  }
-
-  handleCardClick(card) {
-    const { dispatch } = this.props;
-    dispatch(selectCard(card));
   }
 }
 

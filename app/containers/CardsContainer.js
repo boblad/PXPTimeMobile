@@ -117,7 +117,7 @@ class CardsContainer extends Component {
 
   handleCardClick(card) {
     this.props.dispatch(selectCard(card));
-    this.props.router.toCard(this.state);
+    this.props.router.pop();
   }
 }
 

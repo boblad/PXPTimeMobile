@@ -1,4 +1,5 @@
 import LoginContainer from './containers/LoginContainer';
+import BoardsContainer from './containers/BoardsContainer';
 import CardContainer from './containers/CardContainer';
 import CardsContainer from './containers/CardsContainer';
 import DashboardContainer from './containers/DashboardContainer';
@@ -35,6 +36,13 @@ export default class MainRouter {
     this.push(props, {
       title: 'Dashboard',
       component: DashboardContainer
+    })
+  }
+
+  toBoards(props) {
+    this.push(props, {
+      title: 'Boards',
+      component: BoardsContainer
     })
   }
 

@@ -10,11 +10,7 @@ import Statistics from '../assets/images/Statistics.png';
 import Settings from '../assets/images/Settings.png';
 
 const propTypes = {
-  onBoardsClick: PropTypes.func.isRequired,
-  onTodayClick: PropTypes.func.isRequired,
-  onInvoicesClick: PropTypes.func.isRequired,
-  onReportsClick: PropTypes.func.isRequired,
-  onSettingsClick: PropTypes.func.isRequired
+
 };
 
 class Menu extends Component {

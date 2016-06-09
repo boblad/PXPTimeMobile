@@ -3,7 +3,6 @@ import LoginService from '../services/LoginService';
 import BoardService from '../services/BoardService';
 import { toggleIsLoading } from './LoadingActions';
 import { LOGIN_SUCCESS, SET_API_KEY, CLEAR_USER } from '../constants/actionTypes';
-import { Actions } from 'react-native-redux-router';
 import { setSuccessMessage, setErrorMessage, clearMessages } from './MessageActions';
 import config from '../config';
 
@@ -28,7 +27,7 @@ const loginSuccess = (result) => {
   }
 }
 
-export const loginWithCreds = (email, password) => {
+export const loginWithCreds = (email, password, router) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
     let credentials = {
@@ -44,7 +43,7 @@ export const loginWithCreds = (email, password) => {
       }).done();
       dispatch(loginSuccess(response));
       dispatch(toggleIsLoading(false));
-      Actions.dashboardContainer();
+      router.toDashboard();
     })
     .catch((err) => {
       dispatch(toggleIsLoading(false));
@@ -53,7 +52,7 @@ export const loginWithCreds = (email, password) => {
   }
 }
 
-export const loginWithKey = (key) => {
+export const loginWithKey = (key, router) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
     BoardService.req.listBoards(key)
@@ -61,7 +60,7 @@ export const loginWithKey = (key) => {
       AsyncStorage.setItem('apikey', key).then(() => {
       }).done();
       dispatch(toggleIsLoading(false));
-      Actions.dashboardContainer();
+      router.toDashboard();
     })
     .catch((err) => {
       dispatch(toggleIsLoading(false));
@@ -76,14 +75,14 @@ const userClear = () => {
   }
 }
 
-export const clearUser = () => {
+export const clearUser = (router) => {
   return (dispatch) => {
     AsyncStorage.removeItem('apikey')
     .then(() => {
       dispatch(userClear());
     })
     .then(() => {
-      Actions.loginContainer();
+      router.toLogin();
     }).done();
   }
 }

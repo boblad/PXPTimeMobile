@@ -19,6 +19,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5
   },
+  buttonTextNew: {
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#ffffff',
+    backgroundColor: 'transparent'
+  },
   boardButton: {
     width: 250,
     height: 60,
@@ -35,8 +41,6 @@ export const styles = StyleSheet.create({
     alignItems: 'center'
   },
   cardButton: {
-    width: 375,
-    height: 50,
     backgroundColor: '#F0F0F0',
     justifyContent: 'center',
     alignItems: 'center',

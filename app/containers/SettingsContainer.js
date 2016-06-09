@@ -52,7 +52,7 @@ class TodayContainer extends Component {
   }
 
   handleLogoutClick() {
-    this.props.dispatch(clearUser());
+    this.props.dispatch(clearUser(this.props.router));
   }
 }
 
