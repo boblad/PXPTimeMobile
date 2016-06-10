@@ -48,6 +48,7 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
+        this.props.router.toToday()
     this.setState({
       searchValue: '',
       stopWatch: '',
