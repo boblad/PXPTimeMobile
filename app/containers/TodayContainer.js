@@ -51,16 +51,11 @@ class TodayContainer extends Component {
       <View style={styles.mainContainer}>
         <StatusBar barStyle="light-content"/>
         <View style={styles.statsWrap}>
-          <View style={styles.navBarWarp}>
+          <View style={styles.navBarWrap}>
             <View style={styles.navBar}>
-              <TouchableOpacity onPress={() => {this.props.router.pop()}} style={styles.navBarBack}>
-                <Image resizeMode="contain" source={require('../assets/images/Back.png')} style={styles.backIcon}/>
-              </TouchableOpacity>
               <View style={styles.navBarTitle}>
                 <Text style={styles.currentBalenceText}>Weekly</Text>
-                <Text style={styles.navBarText}></Text>
               </View>
-              <View style={styles.navBarSpacer}/>
             </View>
           </View>
           <View style={styles.barChartWrap}>
@@ -148,10 +143,6 @@ class TodayContainer extends Component {
             }
           </ScrollView>
         </View>
-        <View style={styles.bottomBar}>
-          <View style={styles.bottomBarWrap}>
-          </View>
-        </View>
       </View>
     )
   }
@@ -181,7 +172,7 @@ var styles = StyleSheet.create({
     width: width,
     height: height
   },
-  navBarWarp: {
+  navBarWrap: {
     width: width,
     height: 60,
     flexDirection: 'row',
@@ -192,7 +183,7 @@ var styles = StyleSheet.create({
     height: 30,
     flex: 3,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   navBarBack: {
@@ -204,7 +195,7 @@ var styles = StyleSheet.create({
     width: width/3,
     height: 30,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center'
   },
   navBarSpacer: {

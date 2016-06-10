@@ -48,7 +48,7 @@ class LoginContainer extends Component {
     AsyncStorage.getItem('apikey').then((key) => {
       if (key) {
         this.props.dispatch(setApiKey(key));
-        this.props.router.toDashboard(this.state);
+        this.props.router.toRootTab();
       }
     }).done();
     this.setState({

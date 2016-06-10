@@ -3,6 +3,7 @@ import { styles } from './Styles';
 import { listEntries, createEntry } from '../actions/EntryActions';
 import { connect } from 'react-redux';
 import Loader from '../components/Loader';
+import { getDayEntries } from '../helpers/TimeHelpers';
 import React, {
   Component,
   Image,
@@ -48,7 +49,6 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
-        this.props.router.toToday()
     this.setState({
       searchValue: '',
       stopWatch: '',
@@ -147,7 +147,8 @@ class DashboardContainer extends Component {
   getEntries() {
     let totalHours = 0;
     let totalMinutes = 0;
-    let entriesList = this.props.entries.results.map((ent, index) => {
+    let filteredEntries = getDayEntries(this.props.entries.results, moment());
+    let entriesList = filteredEntries.map((ent, index) => {
       totalHours = totalHours + parseInt(ent.entry.hours, 10)
       totalMinutes = totalMinutes + parseInt(ent.entry.minutes, 10)
       return (
@@ -254,11 +255,11 @@ class DashboardContainer extends Component {
               </View>
             </TouchableOpacity>
           <View style={styles.bottomContent}>
+            <View style={styles.dayBar}>
+              <Text style={styles.dayBarText}>Today</Text>
+            </View>
             <ScrollView>
               <View>
-                <View style={styles.dayBar}>
-                  <Text style={styles.dayBarText}>Today</Text>
-                </View>
                 { this.getEntries() }
               </View>
             </ScrollView>

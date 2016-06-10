@@ -7,6 +7,7 @@ import TodayContainer from './containers/TodayContainer';
 import InvoicesContainer from './containers/InvoicesContainer';
 import ReportsContainer from './containers/ReportsContainer';
 import SettingsContainer from './containers/SettingsContainer';
+import RootTabContainer from './containers/RootTabContainer';
 
 export default class MainRouter {
   constructor(navigator) {
@@ -32,12 +33,19 @@ export default class MainRouter {
     });
   }
 
-  toDashboard(props) {
+  toRootTab(props) {
     this.push(props, {
       title: 'Dashboard',
-      component: DashboardContainer
+      component: RootTabContainer
     })
   }
+
+  // toDashboard(props) {
+  //   this.push(props, {
+  //     title: 'Dashboard',
+  //     component: DashboardContainer
+  //   })
+  // }
 
   toBoards(props) {
     this.push(props, {
