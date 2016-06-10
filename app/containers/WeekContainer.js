@@ -22,7 +22,7 @@ const normalizeTime = (time) => {
   return time;
 };
 
-class TodayContainer extends Component {
+class WeekContainer extends Component {
   constructor() {
     super();
   }
@@ -154,7 +154,7 @@ export default connect(state => ({
     entries: state.entries,
     user: state.user
   })
-)(TodayContainer);
+)(WeekContainer);
 
 const GREY = 'rgb(240, 240, 240)';
 const LIGHT_GREY = 'rgb(238, 238, 238)';

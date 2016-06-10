@@ -3,7 +3,7 @@ import BoardsContainer from './containers/BoardsContainer';
 import CardContainer from './containers/CardContainer';
 import CardsContainer from './containers/CardsContainer';
 import DashboardContainer from './containers/DashboardContainer';
-import TodayContainer from './containers/TodayContainer';
+import WeekContainer from './containers/WeekContainer';
 import InvoicesContainer from './containers/InvoicesContainer';
 import ReportsContainer from './containers/ReportsContainer';
 import SettingsContainer from './containers/SettingsContainer';
@@ -68,10 +68,10 @@ export default class MainRouter {
     })
   }
 
-  toToday(props) {
+  toWeek(props) {
     this.push(props, {
       title: 'Today',
-      component: TodayContainer
+      component: WeekContainer
     })
   }
 

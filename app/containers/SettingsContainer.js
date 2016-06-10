@@ -25,7 +25,7 @@ const normalizeTime = (time) => {
   return time;
 };
 
-class TodayContainer extends Component {
+class SettingsContainer extends Component {
   constructor() {
     super();
     this.handleLogoutClick = this.handleLogoutClick.bind(this);
@@ -62,4 +62,4 @@ export default connect(state => ({
     entries: state.entries,
     user: state.user
   })
-)(TodayContainer);
+)(SettingsContainer);

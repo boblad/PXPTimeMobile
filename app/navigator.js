@@ -4,9 +4,10 @@ import MainRouter from './router';
 
 import {
   AppRegistry,
+  BackAndroid,
+  Navigator,
   StyleSheet,
   Text,
-  Navigator,
   View
 } from 'react-native';
 
@@ -19,6 +20,25 @@ var styles = StyleSheet.create({
 });
 
 class MainNavigator extends Component{
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    BackAndroid.addEventListener('hardwareBackPress',
+      this.handleBackAndroid.bind(this));
+  }
+
+  componentWillUnmount() {
+    BackAndroid.removeEventListener('hardwareBackPress',
+      this.handleBackAndroid.bind(this));
+  }
+
+  handleBackAndroid() {
+    this.router.pop();
+    return true;
+  }
+
   renderScene(route, navigator) {
     this.router = this.router || new MainRouter(navigator);
     if (route.component) {

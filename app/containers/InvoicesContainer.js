@@ -52,7 +52,7 @@ class InvoicesContainer extends Component {
       <View style={styles.container}>
         <TopBar
           title="Invoices"
-          onBackClick={() => this.props.router.toDashboard(this.state)} />
+          onBackClick={() => this.props.router.pop()} />
         {
           this.props.loading.isLoading &&
           <Loader/>

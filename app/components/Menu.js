@@ -29,7 +29,7 @@ class Menu extends Component {
         </TouchableHighlight>
         <TouchableHighlight
           style={styles.menuItem}
-          onPress={() => { this.props.router.toToday(this.state) }}>
+          onPress={() => { this.props.router.toWeek(this.state) }}>
           <Image style={buttonStyles.menuIcon} source={Hourglass} />
         </TouchableHighlight>
         <TouchableHighlight

@@ -43,9 +43,11 @@ export const loginWithCreds = (email, password, router) => {
       }).done();
       dispatch(loginSuccess(response));
       dispatch(toggleIsLoading(false));
-      router.toDashboard();
+      console.log(router);
+      router.toRootTab();
     })
     .catch((err) => {
+      console.log(err);
       dispatch(toggleIsLoading(false));
       dispatch(setErrorMessage('Login Failed'));
     })
@@ -60,7 +62,7 @@ export const loginWithKey = (key, router) => {
       AsyncStorage.setItem('apikey', key).then(() => {
       }).done();
       dispatch(toggleIsLoading(false));
-      router.toDashboard();
+      router.toRootTab();
     })
     .catch((err) => {
       dispatch(toggleIsLoading(false));
