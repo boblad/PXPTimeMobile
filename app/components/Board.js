@@ -1,5 +1,13 @@
-import React, { Component, PropTypes, View, Text, TouchableOpacity } from 'react-native';
-import { styles } from '../assets/StyleSheet';
+import React, {
+  Component,
+  Dimensions,
+  Image,
+  PropTypes,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 const propTypes = {
   board: PropTypes.object.isRequired,
@@ -13,13 +21,19 @@ class Card extends Component {
   }
 
   render() {
-    const { board } = this.props;
+    const { board, selected } = this.props;
     return (
-      <View style={styles.inputWrap}>
-        <TouchableOpacity style={styles.boardButton} onPress={this.handleClick}>
-          <Text style={styles.buttonText}>{board.public.name}</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.selectListItem} onPress={this.handleClick}>
+        { selected &&
+          <Image style={styles.selectedIcon} resizeMode="contain" source={require('./images/selectedIcon.png')} />
+        }
+        { !selected &&
+          <View style={styles.selectedIcon}></View>
+        }
+        <View style={styles.selectListItemTextWrap}>
+          <Text style={styles.selectListItemText}>{board.public.name.toUpperCase()}</Text>
+        </View>
+      </TouchableOpacity>
     );
   }
 
@@ -27,6 +41,33 @@ class Card extends Component {
     this.props.onBoardClick(this.props.board)
   }
 }
+
+const { width, height } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  selectListItem: {
+    width: width-40,
+    height: 70,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start'
+  },
+  selectedIcon: {
+    width: width/12,
+    marginRight: 20
+  },
+  selectListItemTextWrap: {
+    height: 70,
+    width: width-60-(width/12),
+    borderColor: '#E4E7F0',
+    borderBottomWidth: 1,
+    justifyContent: 'center'
+  },
+  selectListItemText: {
+    marginTop: 20,
+    color: '#A1A6BB'
+  }
+});
 
 Card.propTypes = propTypes;
 

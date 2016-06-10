@@ -1,21 +1,23 @@
 import { bindActionCreators } from 'redux';
-import { styles } from '../assets/StyleSheet';
 import { helperStyles } from '../assets/HelperStyles';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import { listBoards, selectBoard } from '../actions/BoardActions';
 import Board from '../components/Board';
 import Menu from '../components/Menu';
 import Loader from '../components/Loader';
 import TopBar from '../components/TopBar';
 import React, {
-  StyleSheet,
+  AsyncStorage,
   Component,
-  View,
+  Dimensions,
+  Image,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  AsyncStorage
+  View
 } from 'react-native';
 
 
@@ -33,24 +35,39 @@ class BoardsContainer extends Component {
   }
 
   render() {
+    const { selectedBoard } = this.props.boards;
     return (
-      <View style={styles.container}>
-        <TopBar title="Dashboard"/>
+      <View style={styles.mainContainer}>
         {
           this.props.loading.isLoading &&
           <Loader/>
         }
-        <ScrollView>
-          {
-            this.props.boards.results.map((board, index) => {
-              return (
-                <Board key={index} onBoardClick={this.handleBoardClick} board={board}/>
-              )
-            })
-          }
-        </ScrollView>
-        <Menu router={this.props.router} />
-    </View>
+        <View style={styles.navWrapper}>
+          <TouchableOpacity
+            onPress={() => this.props.router.pop()}
+          >
+            <Image style={styles.backIcon} resizeMode="contain" source={require('./images/backIcon.png')} />
+          </TouchableOpacity>
+          <View style={styles.navTitle}>
+            <Text style={styles.navTitleText}>Boards</Text>
+          </View>
+        </View>
+        <View style={styles.boardListWrapper}>
+          <ScrollView>
+            {
+              this.props.boards.results.map((board, index) => {
+                var selected = false;
+                if (!_.isUndefined(selectedBoard.public) && selectedBoard.public.apikey === board.public.apikey) {
+                  selected = true;
+                };
+                return (
+                  <Board key={index} onBoardClick={this.handleBoardClick} board={board} selected={selected} />
+                )
+              })
+            }
+          </ScrollView>
+        </View>
+      </View>
     );
   }
 
@@ -61,6 +78,48 @@ class BoardsContainer extends Component {
 
   }
 }
+
+const { width, height } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  navWrapper: {
+    width: width,
+    height: 60,
+    top: 0,
+    paddingTop: 29,
+    position: 'absolute',
+    backgroundColor: '#0786E7'
+  },
+  navTitle: {
+    width: width/2,
+    position: 'absolute',
+    left: (width/2)-(width/4),
+    top: 29,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  navTitleText: {
+    color: '#FFFFFF',
+    fontSize: 18
+  },
+  backIcon: {
+    height: 22
+  },
+  boardListWrapper: {
+    width: width,
+    height: height-60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 60
+  }
+});
 
 export default connect(state => ({
     loading: state.loading,
