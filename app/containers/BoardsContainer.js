@@ -56,7 +56,7 @@ class BoardsContainer extends Component {
           <ScrollView>
             {
               this.props.boards.results.map((board, index) => {
-                var selected = false;
+                let selected = false;
                 if (!_.isUndefined(selectedBoard.public) && selectedBoard.public.apikey === board.public.apikey) {
                   selected = true;
                 };

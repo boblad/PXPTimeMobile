@@ -6,7 +6,7 @@ import {
 const initialState = {
   results: [],
   board: {},
-  selectedCard: null
+  selectedCard: {}
 };
 
 export default function cards(state = initialState, action = {}) {

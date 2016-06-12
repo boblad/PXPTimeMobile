@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { listEntries, createEntry } from '../actions/EntryActions';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 import Loader from '../components/Loader';
 import { getDayEntries } from '../helpers/TimeHelpers';
 import React, {
@@ -254,11 +255,11 @@ class DashboardContainer extends Component {
               </View>
               <View style={styles.leftInfoWrap}>
                 {
-                  (this.props.cards.selectedCard) &&
+                  (!_.isUndefined(this.props.cards.selectedCard.public)) &&
                   <Text style={styles.entriesText}>{this.props.cards.selectedCard.public.name}</Text>
                 }
                 {
-                  (!this.props.cards.selectedCard) &&
+                  (_.isUndefined(this.props.cards.selectedCard.public)) &&
                   <Text style={styles.entriesText}>Choose a Card</Text>
                 }
               </View>

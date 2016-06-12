@@ -53,12 +53,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   selectedIcon: {
-    width: width/12,
+    width: width/16,
+    height: 25,
+    marginTop: 20,
     marginRight: 20
   },
   selectListItemTextWrap: {
     height: 70,
-    width: width-60-(width/12),
+    width: width-60-(width/16),
     borderColor: '#E4E7F0',
     borderBottomWidth: 1,
     justifyContent: 'center'

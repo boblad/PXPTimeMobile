@@ -1,22 +1,21 @@
-'use strict';
-
 import { bindActionCreators } from 'redux';
-import { styles } from '../assets/StyleSheet';
-import { forms } from '../assets/FormsStyleSheet';
 import { connect } from 'react-redux';
 import { listCards, selectCard } from '../actions/CardActions';
+import _ from 'lodash';
 import Card from '../components/Card';
 import BoardTitle from '../components/BoardTitle';
 import Menu from '../components/Menu';
 import Loader from '../components/Loader';
 import React, {
-  StyleSheet,
   Component,
-  View,
+  Dimensions,
+  Image,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 
@@ -77,9 +76,10 @@ class CardsContainer extends Component {
   render() {
     const { searchValue } = this.state;
     const { cards } = this.props;
+    const { selectedCard } = cards;
     let lowerSearch  = searchValue.toLowerCase();
     return (
-      <View style={styles.pageWrap}>
+      <View style={styles.mainContainer}>
         {
           this.props.loading.isLoading &&
           <Loader/>
@@ -90,27 +90,42 @@ class CardsContainer extends Component {
         }
         {
           this.props.cards.board.public &&
-          <BoardTitle board={this.props.cards.board}/>
+          <View style={styles.navWrapper}>
+            <TouchableOpacity
+              onPress={() => this.props.router.pop()}
+            >
+              <Image style={styles.backIcon} resizeMode="contain" source={require('./images/backIcon.png')} />
+            </TouchableOpacity>
+            <View style={styles.navTitle}>
+              <Text style={styles.navTitleText}>Boards</Text>
+            </View>
+          </View>
         }
-        <View style={forms.searchInputWrap}>
+        <View style={styles.searchInputWrap}>
           <TextInput
             onChangeText={this.handleSearchChange}
-            style={forms.searchInput}
+            placeholder="Filter"
+            style={styles.searchInput}
             value={this.state.searchValue}/>
         </View>
-        <ScrollView style={styles.cardsScrollView}>
-          {
-            this.props.cards.results.map((card, index) => {
-              let lowerCardName = card.public.name.toLowerCase();
-              if (lowerSearch === '' || lowerCardName.indexOf(lowerSearch) !== -1) {
-                return (
-                  <Card key={index} onCardClick={this.handleCardClick} card={card} />
-                )
-              }
-            })
-          }
-        </ScrollView>
-        <Menu router={this.props.router}/>
+        <View style={styles.boardListWrapper}>
+          <ScrollView>
+            {
+              this.props.cards.results.map((card, index) => {
+                let lowerCardName = card.public.name.toLowerCase();
+                let selected = false;
+                if (!_.isUndefined(selectedCard.public) && selectedCard.public.apikey === card.public.apikey) {
+                  selected = true;
+                };
+                if (lowerSearch === '' || lowerCardName.indexOf(lowerSearch) !== -1) {
+                  return (
+                    <Card key={index} onCardClick={this.handleCardClick} card={card} selected={selected}/>
+                  )
+                }
+              })
+            }
+          </ScrollView>
+        </View>
       </View>
     );
   }
@@ -120,6 +135,64 @@ class CardsContainer extends Component {
     this.props.router.pop();
   }
 }
+
+const { width, height } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  navWrapper: {
+    width: width,
+    height: 60,
+    top: 0,
+    paddingTop: 29,
+    position: 'absolute',
+    backgroundColor: '#0786E7'
+  },
+  navTitle: {
+    width: width/2,
+    position: 'absolute',
+    left: (width/2)-(width/4),
+    top: 29,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  navTitleText: {
+    color: '#FFFFFF',
+    fontSize: 18
+  },
+  backIcon: {
+    height: 22
+  },
+  searchInputWrap: {
+    position: 'absolute',
+    top: 60,
+    width: width,
+    height: 70
+  },
+  searchInput: {
+    backgroundColor: 'rgb(240, 240, 240)',
+    height: 30,
+    width: width-40,
+    borderRadius: 5,
+    marginLeft: 20,
+    marginTop: 20,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
+  boardListWrapper: {
+    width: width,
+    height: height-130,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 130
+  }
+});
 
 export default connect(state => ({
     loading: state.loading,
