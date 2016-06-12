@@ -181,7 +181,15 @@ class DashboardContainer extends Component {
         </View>
       )
     });
-    return entriesList;
+    if (filteredEntries.length > 0) {
+      return entriesList;
+    } else {
+      return (
+        <View style={styles.noEntriesWrap}>
+          <Text style={styles.entriesText}>No entries found.</Text>
+        </View>
+      )
+    }
   }
 
   render() {
@@ -357,9 +365,6 @@ const styles = StyleSheet.create({
   resetButtonText: {
     color: WHITE
   },
-  empty: {
-
-  },
   bottomContent: {
     width: width,
     height: (height - ((height/3) + 40) - 50)
@@ -377,6 +382,11 @@ const styles = StyleSheet.create({
   dayBarText: {
     marginLeft: 20,
     fontSize: 12
+  },
+  noEntriesWrap: {
+    width: width-40,
+    height: 20,
+    margin: 20
   },
   entriesWrap: {
     width: width,
