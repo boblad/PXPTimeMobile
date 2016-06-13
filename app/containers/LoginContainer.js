@@ -94,11 +94,10 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <View style={styles.mainContainer}>
+      <Image style={styles.mainContainer} source={require('./images/loginBackground.jpg')}>
         <StatusBar
           barStyle="light-content"
         />
-        <Image style={styles.backgroundImage} source={require('./images/loginBackground.jpg')} />
         {
           this.props.message.errorMessage &&
           <Failure
@@ -153,7 +152,7 @@ class LoginContainer extends Component {
             <Text style={styles.buttonText}>Sign In with {this.state.signInType}</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </Image>
     );
   }
 
@@ -175,7 +174,11 @@ const { width, height } = Dimensions.get('window');
 
 var styles = StyleSheet.create({
   mainContainer: {
-    flex: 1
+    flex: 1,
+    width: width,
+    height: height,
+    backgroundColor: 'transparent',
+    resizeMode: 'contain'
   },
   backgroundImage: {
     width: width,
@@ -187,7 +190,8 @@ var styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'transparent'
   },
   logoIcon: {
     width: width/2,
