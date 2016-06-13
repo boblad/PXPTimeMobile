@@ -1,7 +1,4 @@
-'use strict';
-
 import { bindActionCreators } from 'redux';
-import { styles } from '../assets/StyleSheet';
 import { connect } from 'react-redux';
 import { listInvoices } from '../actions/InvoiceActions';
 import { helperStyles } from '../assets/HelperStyles';
@@ -9,6 +6,7 @@ import moment from 'moment';
 import Loader from '../components/Loader';
 import Menu from '../components/Menu';
 import TopBar from '../components/TopBar';
+import InvoiceCard from '../components/InvoiceCard';
 import React, {
   StyleSheet,
   Component,
@@ -16,9 +14,20 @@ import React, {
   ScrollView,
   Text,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 
+const { width, height } = Dimensions.get('window');
+
+const GREY = 'rgb(240, 240, 240)';
+const LIGHT_GREY = 'rgb(238, 238, 238)';
+const TEXT_GREY = 'rgb(186, 186, 186)';
+const BLUE = 'rgb(23, 108, 230)';
+const LIGHT_BLUE = 'rgb(118, 155, 239)';
+const TEAL_BLUE = 'rgb(75, 145, 230)';
+const WHITE = '#FFFFFF';
+const GREY_TEXT = 'rgb(195, 195, 195)';
 
 class InvoicesContainer extends Component {
   constructor() {
@@ -34,39 +43,60 @@ class InvoicesContainer extends Component {
     let total = 0;
     let pending = 0;
     let received = 0;
-    let html = this.props.invoices.results.map((invoice, index) => {
-      return (
-        <View key={index} style={styles.todayInputWrap}>
-          <Text style={styles.todayInput}>Invoice #: {invoice.public.invnum}</Text>
-          <Text style={styles.todayInput}>
-            {moment(invoice.public.created_at).format('MMMM Do YYYY')}
-          </Text>
-          <Text style={styles.todayInput}>{invoice.client.public.name}</Text>
-          <Text style={styles.todayInput}>{invoice.board.public.name}</Text>
-          <Text style={styles.todayInput}>${invoice.public.amount}</Text>
-          <Text style={styles.todayInput}>{invoice.public.status}</Text>
-        </View>
-      )
-    });
     return (
       <View style={styles.container}>
-        <TopBar
-          title="Invoices"
-          onBackClick={() => this.props.router.pop()} />
         {
           this.props.loading.isLoading &&
           <Loader/>
         }
         <ScrollView style={styles.invoiceScroll}>
-          <View style={styles.container}>
-          { html }
+          <View style={styles.mainContainer}>
+            {
+              this.props.invoices.results.map((invoice, index) => {
+                return ( <InvoiceCard key={index} invoice={invoice} /> )
+              })
+            }
           </View>
         </ScrollView>
-        <Menu router={this.props.router}/>
+        <View style={styles.topBar}>
+          <Text style={styles.topBarTitle}>Invoices</Text>
+        </View>
       </View>
     );
   }
 }
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: BLUE
+  },
+  mainContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: BLUE,
+    paddingTop: 60
+  },
+  invoiceScroll: {
+    width: width,
+    height: height
+  },
+  topBar: {
+    width: width,
+    backgroundColor: BLUE,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0
+  },
+  topBarTitle: {
+    fontSize: 20,
+    color: WHITE
+  }
+});
 
 export default connect(state => ({
     loading: state.loading,
