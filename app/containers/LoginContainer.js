@@ -229,7 +229,7 @@ var styles = StyleSheet.create({
     height: 46,
     width: width-150,
     marginTop: 20,
-    backgroundColor: '#3A5999',
+    backgroundColor: '#0786E7',
     borderRadius: 23,
     alignItems: 'center',
     justifyContent: 'center'

@@ -84,6 +84,7 @@ const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center'
   },

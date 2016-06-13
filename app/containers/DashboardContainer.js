@@ -313,6 +313,7 @@ class DashboardContainer extends Component {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: '#FFFFFF',
     width: width,
     height: height
   },
@@ -350,7 +351,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   timerActionText: {
-    color: WHITE
+    color: WHITE,
+    backgroundColor: 'transparent'
   },
   resetButtonWrapper: {
     width: width
