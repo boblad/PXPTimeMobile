@@ -117,6 +117,7 @@ class LoginContainer extends Component {
                   placeholder="API Key"
                   style={styles.textInput}
                   onChangeText={this.handleTokenInputChange}/>
+                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/lockIcon.png')} />
               </View>
             }
             {

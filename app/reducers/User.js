@@ -10,6 +10,7 @@ const initialState = {
 };
 
 export default function user(state = initialState, action = {}) {
+  console.log('USER REDUCER', state, action);
   switch (action.type) {
     case LOGIN_SUCCESS:
       return {

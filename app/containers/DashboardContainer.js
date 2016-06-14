@@ -41,6 +41,7 @@ const normalizeTime = (time) => {
 class DashboardContainer extends Component {
   constructor() {
     super();
+    console.log("DASH");
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.tick = this.tick.bind(this);
@@ -59,15 +60,18 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
+    console.log("DASH WILL MOUNT");
     this.setState({
       searchValue: '',
       isRunning: false
     });
 
     const { dispatch, user } = this.props;
-    let startDate = moment().format('YYYY-MM-DD');
-    let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
-    dispatch(listEntries(user.asyncKey, startDate, endDate));
+    if (!_.isUndefined(user.asyncKey) && user.asyncKey !== null) {
+      let startDate = moment().format('YYYY-MM-DD');
+      let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
+      dispatch(listEntries(user.asyncKey, startDate, endDate));
+    }
   }
 
   handleStart() {
