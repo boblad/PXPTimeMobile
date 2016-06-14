@@ -1,6 +1,10 @@
 import BoardService from '../services/BoardService';
 import { toggleIsLoading } from './LoadingActions';
-import { LIST_BOARD_SUCCESS, SELECT_BOARD } from '../constants/actionTypes';
+import {
+  LIST_BOARD_SUCCESS,
+  SELECT_BOARD,
+  CLEAR_BOARD
+} from '../constants/actionTypes';
 import config from '../config';
 
 const listBoardsSuccess = (projects) => {
@@ -34,5 +38,11 @@ const boardSelect = (board) => {
 export const selectBoard = (board) => {
   return (dispatch) => {
     dispatch(boardSelect(board))
+  }
+}
+
+export const clearBoard = () => {
+  return {
+    type: CLEAR_BOARD
   }
 }

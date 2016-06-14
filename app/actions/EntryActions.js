@@ -1,8 +1,11 @@
 import EntryService from '../services/EntryService';
 import { toggleIsLoading } from './LoadingActions';
+import { clearBoard } from './BoardActions';
+import { clearCard } from './CardActions';
 import { LIST_ENTRY_SUCCESS } from '../constants/actionTypes';
 import { setSuccessMessage, setErrorMessage, clearMessages } from './MessageActions';
 import config from '../config';
+import moment from 'moment';
 
 const listEntrySuccess = (results) => {
   return {
@@ -30,7 +33,12 @@ export const createEntry = (key, body) => {
     dispatch(toggleIsLoading(true));
     EntryService.req.createEntry(key, body)
     .then((data) => {
+      let startDate = moment().format('YYYY-MM-DD');
+      let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
       dispatch(toggleIsLoading(false));
+      dispatch(clearBoard(false));
+      dispatch(clearCard(false));
+      dispatch(listEntries(key, startDate, endDate));
       dispatch(setSuccessMessage('Entry Created'));
     })
     .catch((err) => {

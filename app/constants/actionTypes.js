@@ -1,8 +1,10 @@
 export const LIST_BOARD_SUCCESS = 'LIST_BOARD_SUCCESS';
 export const SELECT_BOARD = 'SELECT_BOARD';
+export const CLEAR_BOARD = 'CLEAR_BOARD';
 
 export const LIST_CARD_SUCCESS = 'LIST_CARD_SUCCESS';
 export const SELECT_CARD = 'SELECT_CARD';
+export const CLEAR_CARD = 'CLEAR_CARD';
 
 export const TOGGLE_IS_LOADING = 'TOGGLE_IS_LOADING';
 

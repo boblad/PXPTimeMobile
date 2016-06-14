@@ -2,7 +2,9 @@ import CardService from '../services/CardService';
 import { toggleIsLoading } from './LoadingActions';
 import {
   LIST_CARD_SUCCESS,
-  SELECT_CARD } from '../constants/actionTypes';
+  SELECT_CARD,
+  CLEAR_CARD,
+} from '../constants/actionTypes';
 import config from '../config';
 
 const listCardsSuccess = (results) => {
@@ -38,5 +40,11 @@ const cardSelect = (card) => {
 export const selectCard = (card) => {
   return (dispatch) => {
     dispatch(cardSelect(card))
+  }
+}
+
+export const clearCard = () => {
+  return {
+    type: CLEAR_CARD
   }
 }

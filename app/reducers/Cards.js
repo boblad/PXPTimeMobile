@@ -1,6 +1,7 @@
 import {
   LIST_CARD_SUCCESS,
-  SELECT_CARD
+  SELECT_CARD,
+  CLEAR_CARD
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -21,6 +22,11 @@ export default function cards(state = initialState, action = {}) {
       return {
         ...state,
         selectedCard: action.card
+      };
+    case CLEAR_CARD:
+      return {
+        ...state,
+        selectedCard: {}
       };
     default:
       return state;

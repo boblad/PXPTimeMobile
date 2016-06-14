@@ -66,7 +66,7 @@ export const loginWithKey = (key, router) => {
     })
     .catch((err) => {
       dispatch(toggleIsLoading(false));
-      dispatch(setErrorMessage('invalid api key'))
+      dispatch(setErrorMessage('invalid api key'));
     })
   }
 }

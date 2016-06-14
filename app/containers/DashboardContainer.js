@@ -51,21 +51,17 @@ class DashboardContainer extends Component {
     this.handleBoardSelectClick = this.handleBoardSelectClick.bind(this);
     this.handleCardSelectClick = this.handleCardSelectClick.bind(this);
     this.state = {
-      stopWatch:'',
       timer: '00:00:00',
       startTime: null,
       endTime: null,
-      isRunning: false,
-      plainTime: null
+      isRunning: false
     }
   }
 
   componentWillMount() {
     this.setState({
       searchValue: '',
-      stopWatch: '',
-      isRunning: false,
-      plainTime: null
+      isRunning: false
     });
 
     const { dispatch, user } = this.props;
@@ -76,7 +72,7 @@ class DashboardContainer extends Component {
 
   handleStart() {
     this.setState({
-      startTime: new Date(),
+      startTime: !this.state.startTime ? new Date() : this.state.startTime,
       interval: setInterval(this.tick, 1000),
       isRunning: true
     })
@@ -92,17 +88,34 @@ class DashboardContainer extends Component {
   }
 
   tick() {
-    const {stopWatch} = this.state;
-    let time = Math.floor((new Date() - this.state.startTime)/ 1000)
-    let seconds = time % 60;
-    let minutes = Math.floor(time / 60) % 60;
-    let hours = Math.floor(time / (60 * 60));
+    const {timer} = this.state;
+    let timeArray = timer.split(':');
+    let hours = 0;
+    let minutes = 0;
+    let seconds = 0;
+
+    if (timeArray.length === 3) {
+      hours = parseInt(timeArray[0])*60*60;
+      minutes = parseInt(timeArray[1])*60;
+      seconds = parseInt(timeArray[2]);
+
+      let totalSeconds = (hours + minutes + seconds);
+
+      let newTotal = (totalSeconds+1)*1000
+
+      let newTime = moment.utc(newTotal).format("HH:mm:ss");
+
+      let newTimeArray = newTime.split(':');
+      hours = parseInt(newTimeArray[0])*60*60;
+      minutes = parseInt(newTimeArray[1])*60;
+      seconds = parseInt(newTimeArray[2]);
+    }
+
     this.setState({
       timer: `${normalizeTime(hours)}:${normalizeTime(minutes)}:${normalizeTime(seconds)}`,
       hours: hours,
       minutes: minutes,
-      seconds: seconds,
-      plainTime: time
+      seconds: seconds
     })
   }
 
@@ -307,6 +320,7 @@ class DashboardContainer extends Component {
       card_apikey: selectedCard.public.apikey
     }
     dispatch(createEntry(user.asyncKey, body));
+    this.handleClearTime();
   }
 }
 

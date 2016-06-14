@@ -1,6 +1,7 @@
 import {
   LIST_BOARD_SUCCESS,
-  SELECT_BOARD
+  SELECT_BOARD,
+  CLEAR_BOARD
 } from '../constants/actionTypes';
 
 const initialState = {
@@ -19,6 +20,11 @@ export default function boards(state = initialState, action = {}) {
       return {
         ...state,
         selectedBoard: action.board
+      };
+    case CLEAR_BOARD:
+      return {
+        ...state,
+        selectedBoard: {}
       };
     default:
       return state;
