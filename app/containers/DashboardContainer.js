@@ -41,7 +41,6 @@ const normalizeTime = (time) => {
 class DashboardContainer extends Component {
   constructor() {
     super();
-    console.log("DASH");
     this.handleStart = this.handleStart.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.tick = this.tick.bind(this);
@@ -60,7 +59,6 @@ class DashboardContainer extends Component {
   }
 
   componentWillMount() {
-    console.log("DASH WILL MOUNT");
     this.setState({
       searchValue: '',
       isRunning: false

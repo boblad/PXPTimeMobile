@@ -23,7 +23,6 @@ export const listEntries = (key, startDate, endDate) => {
       dispatch(toggleIsLoading(false));
     })
     .catch((err) => {
-      console.log('Entries List Error', err);
       dispatch(toggleIsLoading(false));
     })
   }

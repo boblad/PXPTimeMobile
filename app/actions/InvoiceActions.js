@@ -28,7 +28,7 @@ export const listReactBoard = (key) => {
   return (dispatch) => {
     InvoiceService.req.listReactBoard(key)
     .then((times) => {
-      console.log('times', times)
+      
     })
     .catch((err) => {
 

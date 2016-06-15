@@ -46,7 +46,6 @@ export const loginWithCreds = (email, password, router) => {
       router.toRootTab();
     })
     .catch((err) => {
-      console.log(err);
       dispatch(toggleIsLoading(false));
       dispatch(setErrorMessage('Login Failed'));
     })
@@ -56,13 +55,10 @@ export const loginWithCreds = (email, password, router) => {
 export const loginWithKey = (key, router) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
-    console.log(key);
-    console.log(router);
     BoardService.req.listBoards(key)
     .then((user) => {
       AsyncStorage.setItem('apikey', key).then(() => {
         AsyncStorage.getItem('apikey').then((value) => {
-          console.log('KEY', value);
           dispatch(storeApiKey(value));
           dispatch(toggleIsLoading(false));
           router.toRootTab();
@@ -70,7 +66,6 @@ export const loginWithKey = (key, router) => {
       }).done();
     })
     .catch((err) => {
-      console.log('Board Service Error', err);
       dispatch(toggleIsLoading(false));
       dispatch(setErrorMessage('invalid api key'));
     })
