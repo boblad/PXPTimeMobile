@@ -4,17 +4,20 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import Loader from '../components/Loader';
 import { getDayEntries } from '../helpers/TimeHelpers';
+var dismissKeyboard = require('dismissKeyboard');
+
 import React, {
+  AsyncStorage,
+  AppState,
   Component,
   Dimensions,
   Image,
-  View,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  AsyncStorage
+  View
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
@@ -50,11 +53,16 @@ class DashboardContainer extends Component {
     this.hideModalClick = this.hideModalClick.bind(this);
     this.handleBoardSelectClick = this.handleBoardSelectClick.bind(this);
     this.handleCardSelectClick = this.handleCardSelectClick.bind(this);
+    this.handleAppStateChange = this.handleAppStateChange.bind(this);
+    this.handleAppBackground = this.handleAppBackground.bind(this);
+    this.handleAppForeground = this.handleAppForeground.bind(this);
     this.state = {
       timer: '00:00:00',
       startTime: null,
       endTime: null,
-      isRunning: false
+      isRunning: false,
+      currentAppState: AppState.currentState,
+      backgroundTime: ''
     }
   }
 
@@ -72,13 +80,58 @@ class DashboardContainer extends Component {
     }
   }
 
+  componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange);
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  handleAppStateChange(currentAppState) {
+    if (this.state.currentAppState === 'active' && currentAppState === 'inactive') {
+      this.handleAppBackground();
+    } else if (this.state.currentAppState === 'background' && currentAppState === 'active') {
+      this.handleAppForeground();
+    }
+    this.setState({ currentAppState, });
+  }
+
+  handleAppBackground() {
+    if (this.state.isRunning) {
+      this.setState({
+        backgroundTime: new Date(),
+      });
+    }
+  }
+
+  handleAppForeground() {
+    if (this.state.isRunning && this.state.backgroundTime !== '') {
+      const { backgroundTime } = this.state;
+      let timeDiff = new Date() - backgroundTime;
+      let formattedTimeDiff = moment.utc(timeDiff).format("HH:mm:ss");
+      let timeDiffArray = formattedTimeDiff.split(':');
+      let timeArray = this.state.timer.split(':');
+
+      let hours = (parseInt(timeArray[0]) + parseInt(timeDiffArray[0]))*60*60;
+      let minutes = (parseInt(timeArray[1]) + parseInt(timeDiffArray[1]))*60;
+      let seconds = (parseInt(timeArray[2]) + parseInt(timeDiffArray[2]));
+
+      let totalTime = moment.utc((hours + minutes + seconds)*1000).format('HH:mm:ss');
+
+      this.setState({
+        timer: totalTime,
+        backgroundTime: ''
+      });
+    }
+  }
+
   handleStart() {
     this.setState({
       startTime: !this.state.startTime ? new Date() : this.state.startTime,
       interval: setInterval(this.tick, 1000),
       isRunning: true
     })
-
   }
 
   handleStop() {
@@ -108,8 +161,8 @@ class DashboardContainer extends Component {
       let newTime = moment.utc(newTotal).format("HH:mm:ss");
 
       let newTimeArray = newTime.split(':');
-      hours = parseInt(newTimeArray[0])*60*60;
-      minutes = parseInt(newTimeArray[1])*60;
+      hours = parseInt(newTimeArray[0]);
+      minutes = parseInt(newTimeArray[1]);
       seconds = parseInt(newTimeArray[2]);
     }
 
@@ -218,8 +271,10 @@ class DashboardContainer extends Component {
             <View style={styles.topContainer}>
               <View style={styles.timerInputWrap}>
                 <TextInput
+                  ref="Timer"
                   style={styles.timerInput}
                   value={this.state.timer}
+                  keyboardType="numbers-and-punctuation"
                   underlineColorAndroid="transparent"
                   onChangeText={this.handleTimeTextChange}/>
               </View>
@@ -323,6 +378,7 @@ class DashboardContainer extends Component {
     }
     dispatch(createEntry(user.asyncKey, body));
     this.handleClearTime();
+    this.refs.Timer.blur();
   }
 }
 
