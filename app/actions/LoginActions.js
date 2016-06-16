@@ -39,11 +39,11 @@ export const loginWithCreds = (email, password, router) => {
       AsyncStorage.setItem('apikey', response.user.private_profile.apikey).then(() => {
         AsyncStorage.getItem('apikey').then((value) => {
           dispatch(storeApiKey(value));
+          dispatch(loginSuccess(response));
+          dispatch(toggleIsLoading(false));
+          router.toRootTab();
         }).done()
       }).done();
-      dispatch(loginSuccess(response));
-      dispatch(toggleIsLoading(false));
-      router.toRootTab();
     })
     .catch((err) => {
       dispatch(toggleIsLoading(false));
