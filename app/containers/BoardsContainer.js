@@ -53,7 +53,7 @@ class BoardsContainer extends Component {
           </View>
         </View>
         <View style={styles.boardListWrapper}>
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
             {
               this.props.boards.results.map((board, index) => {
                 let selected = false;
@@ -119,6 +119,9 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 60
+  },
+  scrollContainer: {
+    width: width
   }
 });
 

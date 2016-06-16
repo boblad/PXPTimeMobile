@@ -109,7 +109,7 @@ class CardsContainer extends Component {
             value={this.state.searchValue}/>
         </View>
         <View style={styles.boardListWrapper}>
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.scrollContainer}>
             {
               this.props.cards.results.map((card, index) => {
                 let lowerCardName = card.public.name.toLowerCase();
@@ -192,6 +192,9 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 130
+  },
+  scrollContainer: {
+    width: width
   }
 });
 

@@ -85,13 +85,13 @@ class DashboardContainer extends Component {
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
+    AppState.removeEventListener('change', this.handleAppStateChange);
   }
 
   handleAppStateChange(currentAppState) {
-    if (this.state.currentAppState === 'active' && currentAppState === 'inactive') {
+    if (currentAppState === 'inactive' || currentAppState === 'background') {
       this.handleAppBackground();
-    } else if (this.state.currentAppState === 'background' && currentAppState === 'active') {
+    } else if (currentAppState === 'active') {
       this.handleAppForeground();
     }
     this.setState({ currentAppState, });
