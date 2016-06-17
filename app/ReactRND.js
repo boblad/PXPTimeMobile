@@ -30,8 +30,7 @@ const GREY = 'rgb(240, 240, 240)';
 
 var styles = StyleSheet.create({
   container: {
-    width: width,
-    height: height,
+    flex: 1,
     backgroundColor: '#FFFFFF'
   },
   loader: {
