@@ -15,6 +15,7 @@
     "react-native-linear-gradient": "^1.5.10",
     "react-native-progress": "^2.2.2",
     "react-native-redux-router": "^1.0.6",
+    "react-native-swipeout": "^2.0.12",
     "react-native-tab-navigator": "^0.3.2",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",

@@ -92,7 +92,7 @@ class LoginContainer extends Component {
 
   render() {
     return (
-      <Image style={styles.mainContainer} source={require('./images/loginBackground.jpg')}>
+      <Image style={styles.mainContainer} resizeMode="cover" source={require('./images/loginBackground.jpg')}>
         <StatusBar
           barStyle="light-content"
         />

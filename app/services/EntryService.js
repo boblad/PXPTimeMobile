@@ -14,4 +14,10 @@ req.createEntry = (apiKey, body) => {
   .then(data => data);
 }
 
+req.deleteEntry = (apiKey, entryApiKey) => {
+  let url = `/entries/${entryApiKey}/`;
+  return Request.delete(url, apiKey)
+  .then(data => data);
+}
+
 exports.req = req;

@@ -1,9 +1,10 @@
 import { bindActionCreators } from 'redux';
-import { listEntries, createEntry } from '../actions/EntryActions';
+import { listEntries, createEntry, deleteEntry } from '../actions/EntryActions';
 import { setApiKey } from '../actions/LoginActions';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { getDayEntries } from '../helpers/TimeHelpers';
+var Swipeout = require('react-native-swipeout')
 var dismissKeyboard = require('dismissKeyboard');
 
 import React, {
@@ -57,6 +58,7 @@ class DashboardContainer extends Component {
     this.handleAppStateChange = this.handleAppStateChange.bind(this);
     this.handleAppBackground = this.handleAppBackground.bind(this);
     this.handleAppForeground = this.handleAppForeground.bind(this);
+    this.getEntries = this.getEntries.bind(this);
     this.state = {
       timer: '00:00:00',
       startTime: null,
@@ -72,7 +74,6 @@ class DashboardContainer extends Component {
       searchValue: '',
       isRunning: false
     });
-
     let startDate = moment().format('YYYY-MM-DD');
     let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
 
@@ -83,7 +84,7 @@ class DashboardContainer extends Component {
       AsyncStorage.getItem('apikey').then((key) => {
         if (key) {
           this.props.dispatch(setApiKey(key));
-          dispatch(listEntries(user.asyncKey, startDate, endDate));
+          dispatch(listEntries(key, startDate, endDate));
         }
       }).done();
     }
@@ -244,29 +245,44 @@ class DashboardContainer extends Component {
     }
   }
 
+  handleDeleteEntry(entryApiKey) {
+    const { dispatch, user } = this.props;
+    dispatch(deleteEntry(user.asyncKey, entryApiKey));
+  }
+
   getEntries() {
     let totalHours = 0;
     let totalMinutes = 0;
     let filteredEntries = getDayEntries(this.props.entries.results, moment());
     let entriesList = filteredEntries.map((ent, index) => {
+      var swipeoutBtns = [
+        {
+          text: 'DELETE',
+          backgroundColor: '#EB4E35',
+          color: WHITE,
+          onPress: this.handleDeleteEntry.bind(this, ent.entry.apikey),
+        }
+      ]
       totalHours = totalHours + parseInt(ent.entry.hours, 10)
       totalMinutes = totalMinutes + parseInt(ent.entry.minutes, 10)
       return (
-        <View key={index} style={styles.entriesWrap}>
-          <View style={styles.entries}>
-            <View style={styles.iconWrap}>
-              <Image style={styles.icon} resizeMode="contain" source={require("./images/timeIcon.png")}/>
-            </View>
-            <View style={styles.leftInfoWrap}>
-              <Text style={styles.entriesText}>{ent.client.public.name}</Text>
-              <Text style={styles.entriesText}>{ent.board.public.name}</Text>
-            </View>
-            <View style={styles.rightInfoWrap}>
-              <Text style={styles.entriesText}>{ent.entry.hours} hrs</Text>
-              <Text style={styles.entriesText}>{ent.entry.minutes} mins</Text>
+        <Swipeout key={index} rowID={index} autoClose={true} style={styles.entriesWrap} right={swipeoutBtns}>
+          <View style={styles.entriesWrap}>
+            <View style={styles.entries}>
+              <View style={styles.iconWrap}>
+                <Image style={styles.icon} resizeMode="contain" source={require("./images/timeIcon.png")}/>
+              </View>
+              <View style={styles.leftInfoWrap}>
+                <Text style={styles.entriesText}>{ent.client.public.name}</Text>
+                <Text style={styles.entriesText}>{ent.board.public.name}</Text>
+              </View>
+              <View style={styles.rightInfoWrap}>
+                <Text style={styles.entriesText}>{ent.entry.hours} hrs</Text>
+                <Text style={styles.entriesText}>{ent.entry.minutes} mins</Text>
+              </View>
             </View>
           </View>
-        </View>
+        </Swipeout>
       )
     });
     if (filteredEntries.length > 0) {
@@ -383,18 +399,28 @@ class DashboardContainer extends Component {
   }
 
   handleSubmit() {
-    const {selectedCard} = this.props.cards;
+    const { selectedCard } = this.props.cards;
     const { dispatch, user } = this.props;
-    let body = {
-      hours: this.state.hours,
-      minutes: this.state.minutes,
-      client_apikey: selectedCard.client.public.apikey,
-      board_apikey: selectedCard.board.public.apikey,
-      card_apikey: selectedCard.public.apikey
+    if (!_.isEmpty(selectedCard) && !_.isUndefined(this.state.timer !== '00:00:00')) {
+      let body = {
+        hours: this.state.hours,
+        minutes: this.state.minutes,
+        client_apikey: selectedCard.client.public.apikey,
+        board_apikey: selectedCard.board.public.apikey,
+        card_apikey: selectedCard.public.apikey
+      }
+      dispatch(createEntry(user.asyncKey, body));
+      this.handleClearTime();
+      this.refs.Timer.blur();
+    } else {
+      Alert.alert(
+        'Warning',
+        'You must first track time, select a board and a card before submitting time.',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      );
     }
-    dispatch(createEntry(user.asyncKey, body));
-    this.handleClearTime();
-    this.refs.Timer.blur();
   }
 }
 
@@ -484,7 +510,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: .5,
     alignItems: 'center',
-    borderColor: GREY
+    borderColor: GREY,
+    backgroundColor: WHITE
   },
   entries: {
     width: width,

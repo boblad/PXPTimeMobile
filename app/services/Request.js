@@ -111,10 +111,12 @@ request.delete = function (url, jwt = '') {
   let fetchOptions = {
     method: 'DELETE',
     headers: {
+      'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: jwt ? 'JWT ' + jwt : ''
-    }
+      Authorization: jwt ? 'Token token=' + jwt : ''
+    },
   };
+
   return fetch(apiUrl, fetchOptions)
     .then(handleErrors)
     .then();

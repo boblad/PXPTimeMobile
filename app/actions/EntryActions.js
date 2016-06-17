@@ -28,18 +28,36 @@ export const listEntries = (key, startDate, endDate) => {
   }
 }
 
-export const createEntry = (key, body) => {
+export const createEntry = (key, entryApiKey) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
-    EntryService.req.createEntry(key, body)
+    EntryService.req.createEntry(key, entryApiKey)
     .then((data) => {
       let startDate = moment().format('YYYY-MM-DD');
       let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
       dispatch(toggleIsLoading(false));
-      dispatch(clearBoard(false));
-      dispatch(clearCard(false));
+      dispatch(clearBoard());
+      dispatch(clearCard());
       dispatch(listEntries(key, startDate, endDate));
       dispatch(setSuccessMessage('Entry Created'));
+    })
+    .catch((err) => {
+      dispatch(toggleIsLoading(false));
+      dispatch(setErrorMessage('Entry Failed'));
+    })
+  }
+}
+
+export const deleteEntry = (key, body) => {
+  return (dispatch) => {
+    dispatch(toggleIsLoading(true));
+    EntryService.req.deleteEntry(key, body)
+    .then((data) => {
+      let startDate = moment().format('YYYY-MM-DD');
+      let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
+      dispatch(toggleIsLoading(false));
+      dispatch(listEntries(key, startDate, endDate));
+      dispatch(setSuccessMessage('Entry Deleted'));
     })
     .catch((err) => {
       dispatch(toggleIsLoading(false));
