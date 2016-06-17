@@ -2,7 +2,6 @@ import { bindActionCreators } from 'redux';
 import { listEntries, createEntry } from '../actions/EntryActions';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import Loader from '../components/Loader';
 import { getDayEntries } from '../helpers/TimeHelpers';
 var dismissKeyboard = require('dismissKeyboard');
 
@@ -263,10 +262,6 @@ class DashboardContainer extends Component {
   render() {
     return (
         <View style={styles.mainContainer}>
-          {
-            this.props.loading.isLoading &&
-            <Loader/>
-          }
           <LinearGradient colors={['#008DE7', '#3B55E7']}>
             <View style={styles.topContainer}>
               <View style={styles.timerInputWrap}>
@@ -521,7 +516,6 @@ const styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    loading: state.loading,
     boards: state.boards,
     cards: state.cards,
     entries: state.entries,

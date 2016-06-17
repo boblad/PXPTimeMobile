@@ -5,7 +5,6 @@ import _ from 'lodash';
 import Card from '../components/Card';
 import BoardTitle from '../components/BoardTitle';
 import Menu from '../components/Menu';
-import Loader from '../components/Loader';
 import React, {
   Component,
   Dimensions,
@@ -80,10 +79,6 @@ class CardsContainer extends Component {
     let lowerSearch  = searchValue.toLowerCase();
     return (
       <View style={styles.mainContainer}>
-        {
-          this.props.loading.isLoading &&
-          <Loader/>
-        }
         {
           !this.props.cards.board.public &&
           <View style={styles.boardTitle}/>
@@ -199,7 +194,6 @@ const styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    loading: state.loading,
     cards: state.cards,
     message: state.message,
     boards: state.boards,

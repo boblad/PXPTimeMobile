@@ -10,7 +10,6 @@ import { loginWithKey, loginWithCreds, setApiKey } from '../actions/LoginActions
 import pxpLogo from './images/pxpLogo.png';
 import config from '../config';
 //import ActivityIndicator from '../Common/ActivityIndicator/';
-import Loader from '../components/Loader';
 import Success from '../components/alerts/Success';
 import Failure from '../components/alerts/Failure';
 import React, {
@@ -252,7 +251,6 @@ var styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    loading: state.loading,
     message: state.message
   })
 )(LoginContainer);

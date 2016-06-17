@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { listEntries } from '../actions/EntryActions';
+import { listEntries, clearEntries } from '../actions/EntryActions';
 import Menu from '../components/Menu';
 import TopBar from '../components/TopBar';
 import Loader from '../components/Loader';
@@ -11,7 +11,8 @@ import React, {
   View, Text, StyleSheet, ScrollView,
   TouchableHighlight, Image, Dimensions,
   Component, StatusBar, Animated, LayoutAnimation,
-  TouchableOpacity, TextInput
+  TouchableOpacity, TextInput,
+  UIManager
 } from 'react-native';
 
 
@@ -22,31 +23,46 @@ const normalizeTime = (time) => {
   return time;
 };
 
+const baseEntry = {
+  entry: {
+    minutes: 0,
+    hours: 0
+  },
+  dayString: "..."
+};
+
 class WeekContainer extends Component {
   constructor() {
     super();
+    UIManager.setLayoutAnimationEnabledExperimental &&
+    UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 
   componentWillMount() {
     const { dispatch, user } = this.props;
+    dispatch(clearEntries());
     let startDate = moment().day('Monday').hours(0).minutes(0).seconds(0).format('YYYY-MM-DD');
     let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
+    let weeklyEntries = [];
+    for (let i = 0; i < 7; i++) {
+      weeklyEntries[i] = baseEntry;
+      weeklyEntries[i].dayString = moment().weekday(i).format('ddd');
+    }
     this.setState({
       startDate: startDate,
-      endDate: endDate
+      endDate: endDate,
+      weeklyEntries: weeklyEntries
     })
     dispatch(listEntries(user.asyncKey, startDate, endDate));
   }
 
   render() {
     const { results } = this.props.entries;
-    let mondayEntries = getDayEntries(results, this.state.startDate);
     let weeklyEntries = [];
-    weeklyEntries[0] = getDayEntries(results, this.state.startDate);
-    weeklyEntries[3] = getDayEntries(results, this.state.startDate);
     for (let i = 0; i < 7; i++) {
       weeklyEntries[i] = getDayEntries(results, moment(this.state.startDate).add(i, 'd'))
     }
+    LayoutAnimation.spring();
     return (
       <View style={styles.mainContainer}>
         <StatusBar barStyle="light-content"/>
@@ -239,8 +255,8 @@ var styles = StyleSheet.create({
     height: 1,
     borderRadius: 8,
     backgroundColor: LIGHT_BLUE,
-    marginBottom: 5,
-    marginTop: 5
+    marginBottom: 10,
+    marginTop: 10
   },
   bottomContent: {
     width: width,

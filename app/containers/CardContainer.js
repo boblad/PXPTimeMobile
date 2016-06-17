@@ -12,7 +12,6 @@ import { clearMessages } from '../actions/MessageActions';
 import Card from '../components/Card';
 import Menu from '../components/Menu';
 import TopBar from '../components/TopBar';
-import Loader from '../components/Loader';
 import Success from '../components/alerts/Success';
 import Failure from '../components/alerts/Failure';
 import LinearGradient from 'react-native-linear-gradient';
@@ -120,10 +119,6 @@ class CardContainer extends Component {
     return (
       <View style={styles.container}>
         {
-          this.props.loading.isLoading &&
-          <Loader/>
-        }
-        {
           this.props.message.errorMessage &&
           <Failure hideModalClick={this.hideModalClick} />
         }
@@ -203,7 +198,6 @@ class CardContainer extends Component {
 }
 
 export default connect(state => ({
-    loading: state.loading,
     cards: state.cards,
     message: state.message,
     user: state.user

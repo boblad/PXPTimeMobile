@@ -2,7 +2,7 @@ import EntryService from '../services/EntryService';
 import { toggleIsLoading } from './LoadingActions';
 import { clearBoard } from './BoardActions';
 import { clearCard } from './CardActions';
-import { LIST_ENTRY_SUCCESS } from '../constants/actionTypes';
+import { LIST_ENTRY_SUCCESS, CLEAR_ENTRIES } from '../constants/actionTypes';
 import { setSuccessMessage, setErrorMessage, clearMessages } from './MessageActions';
 import config from '../config';
 import moment from 'moment';
@@ -45,5 +45,15 @@ export const createEntry = (key, body) => {
       dispatch(toggleIsLoading(false));
       dispatch(setErrorMessage('Entry Failed'));
     })
+  }
+}
+
+const entriesClear = () => ({
+  type: CLEAR_ENTRIES
+})
+
+export const clearEntries = () => {
+  return (dispatch) => {
+    dispatch(entriesClear());
   }
 }

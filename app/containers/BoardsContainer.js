@@ -5,7 +5,6 @@ import _ from 'lodash';
 import { listBoards, selectBoard } from '../actions/BoardActions';
 import Board from '../components/Board';
 import Menu from '../components/Menu';
-import Loader from '../components/Loader';
 import TopBar from '../components/TopBar';
 import React, {
   AsyncStorage,
@@ -38,10 +37,6 @@ class BoardsContainer extends Component {
     const { selectedBoard } = this.props.boards;
     return (
       <View style={styles.mainContainer}>
-        {
-          this.props.loading.isLoading &&
-          <Loader/>
-        }
         <View style={styles.navWrapper}>
           <TouchableOpacity
             onPress={() => this.props.router.pop()}
@@ -126,7 +121,6 @@ const styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    loading: state.loading,
     boards: state.boards,
     message: state.message,
     user: state.user

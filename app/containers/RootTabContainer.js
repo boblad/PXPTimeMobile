@@ -73,7 +73,6 @@ class RootTabContainer extends Component {
 }
 
 export default connect(state => ({
-    loading: state.loading,
     boards: state.boards,
     cards: state.cards,
     entries: state.entries,

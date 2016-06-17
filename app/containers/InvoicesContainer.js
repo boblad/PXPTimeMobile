@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { listInvoices } from '../actions/InvoiceActions';
 import { helperStyles } from '../assets/HelperStyles';
 import moment from 'moment';
-import Loader from '../components/Loader';
 import Menu from '../components/Menu';
 import TopBar from '../components/TopBar';
 import InvoiceCard from '../components/InvoiceCard';
@@ -45,10 +44,6 @@ class InvoicesContainer extends Component {
     let received = 0;
     return (
       <View style={styles.container}>
-        {
-          this.props.loading.isLoading &&
-          <Loader/>
-        }
         <ScrollView style={styles.invoiceScroll}>
           <View style={styles.mainContainer}>
             {
@@ -99,7 +94,6 @@ export const styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    loading: state.loading,
     message: state.message,
     invoices: state.invoices,
     user: state.user

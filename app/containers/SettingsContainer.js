@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { clearUser } from '../actions/LoginActions';
 import Menu from '../components/Menu';
 import moment from 'moment';
-import Loader from '../components/Loader';
 import React, {
   Component,
   Dimensions,
@@ -33,10 +32,6 @@ class SettingsContainer extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
-        {
-          this.props.loading.isLoading &&
-          <Loader/>
-        }
         <View style={styles.navWrapper}>
           <View style={styles.navTitle}>
             <Text style={styles.navTitleText}>Settings</Text>
@@ -102,7 +97,6 @@ const styles = StyleSheet.create({
 });
 
 export default connect(state => ({
-    loading: state.loading,
     message: state.message,
     entries: state.entries,
     user: state.user
