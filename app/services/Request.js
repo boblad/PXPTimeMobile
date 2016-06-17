@@ -9,8 +9,8 @@ function handleErrors(res) {
   }
   return res.json()
   .then(function (err) {
-    if (err.hasOwnProperty('non_field_errors')) {
-      throw new Error(err.non_field_errors[0]);
+    if (err.hasOwnProperty('error')) {
+      throw new Error(err.error);
     } else {
       throw new Error('An unknown error occurred');
     }

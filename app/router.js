@@ -8,6 +8,7 @@ import InvoicesContainer from './containers/InvoicesContainer';
 import ReportsContainer from './containers/ReportsContainer';
 import SettingsContainer from './containers/SettingsContainer';
 import RootTabContainer from './containers/RootTabContainer';
+import SignUpContainer from './containers/SignUpContainer';
 
 export default class MainRouter {
   constructor(navigator) {
@@ -40,12 +41,12 @@ export default class MainRouter {
     })
   }
 
-  // toDashboard(props) {
-  //   this.push(props, {
-  //     title: 'Dashboard',
-  //     component: DashboardContainer
-  //   })
-  // }
+  toSignUp(props) {
+    this.push(props, {
+      title: 'Sign Up',
+      component: SignUpContainer
+    })
+  }
 
   toBoards(props) {
     this.push(props, {

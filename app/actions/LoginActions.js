@@ -72,6 +72,27 @@ export const loginWithKey = (key, router) => {
   }
 }
 
+export const createUser = (user, router) => {
+  return (dispatch) => {
+    dispatch(toggleIsLoading(true));
+    LoginService.req.createUser(user)
+    .then((response) => {
+      AsyncStorage.setItem('apikey', response.user.private_profile.apikey).then(() => {
+        AsyncStorage.getItem('apikey').then((value) => {
+          dispatch(storeApiKey(value));
+          dispatch(loginSuccess(response));
+          dispatch(toggleIsLoading(false));
+          router.toRootTab();
+        }).done()
+      }).done();
+    })
+    .catch((err) => {
+      dispatch(toggleIsLoading(false));
+      dispatch(setErrorMessage('invalid user submission'));
+    })
+  }
+}
+
 const userClear = () => {
   return {
     type: CLEAR_USER

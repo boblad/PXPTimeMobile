@@ -35,6 +35,7 @@ class LoginContainer extends Component {
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleTokenInputChange = this.handleTokenInputChange.bind(this);
+    this.handleSignUpClick = this.handleSignUpClick.bind(this);
     this.hideModalClick = this.hideModalClick.bind(this);
     this.state = {
       email: '',
@@ -88,6 +89,10 @@ class LoginContainer extends Component {
         signInType: 'Api Key'
       })
     }
+  }
+
+  handleSignUpClick() {
+    this.props.router.toSignUp();
   }
 
   render() {
@@ -146,9 +151,12 @@ class LoginContainer extends Component {
           <TouchableOpacity style={styles.buttonBlue} onPress={this.handleLoginClick}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
-          <Text style={styles.orText}>- or -</Text>
           <TouchableOpacity style={styles.buttonClear} onPress={this.handleAlternateClick}>
             <Text style={styles.buttonText}>Sign In with {this.state.signInType}</Text>
+          </TouchableOpacity>
+          <Text style={styles.orText}>- or -</Text>
+          <TouchableOpacity style={styles.buttonClear} onPress={this.handleSignUpClick}>
+            <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </Image>
@@ -232,6 +240,7 @@ var styles = StyleSheet.create({
     height: 46,
     width: width-150,
     marginTop: 20,
+    marginBottom: 20,
     backgroundColor: '#0786E7',
     borderRadius: 23,
     alignItems: 'center',
