@@ -1,13 +1,15 @@
 import { bindActionCreators } from 'redux';
 import { listEntries, createEntry } from '../actions/EntryActions';
+import { setApiKey } from '../actions/LoginActions';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { getDayEntries } from '../helpers/TimeHelpers';
 var dismissKeyboard = require('dismissKeyboard');
 
 import React, {
-  AsyncStorage,
+  Alert,
   AppState,
+  AsyncStorage,
   Component,
   Dimensions,
   Image,
@@ -71,11 +73,19 @@ class DashboardContainer extends Component {
       isRunning: false
     });
 
+    let startDate = moment().format('YYYY-MM-DD');
+    let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
+
     const { dispatch, user } = this.props;
     if (!_.isUndefined(user.asyncKey) && user.asyncKey !== null) {
-      let startDate = moment().format('YYYY-MM-DD');
-      let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
       dispatch(listEntries(user.asyncKey, startDate, endDate));
+    } else {
+      AsyncStorage.getItem('apikey').then((key) => {
+        if (key) {
+          this.props.dispatch(setApiKey(key));
+          dispatch(listEntries(user.asyncKey, startDate, endDate));
+        }
+      }).done();
     }
   }
 
@@ -220,7 +230,18 @@ class DashboardContainer extends Component {
   }
 
   handleCardSelectClick() {
-    this.props.router.toCards();
+    const { selectedBoard } = this.props.boards;
+    if (!_.isUndefined(selectedBoard.public)) {
+      this.props.router.toCards();
+    } else {
+      Alert.alert(
+        'Warning',
+        'You must first select a board.',
+        [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      );
+    }
   }
 
   getEntries() {

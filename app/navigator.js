@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import LoginContainer from './containers/LoginContainer';
+import RootTabContainer from './containers/RootTabContainer';
 import MainRouter from './router';
 
 import {
   AppRegistry,
+  AsyncStorage,
   BackAndroid,
   Navigator,
   StyleSheet,
@@ -22,6 +24,28 @@ var styles = StyleSheet.create({
 class MainNavigator extends Component{
   constructor(props) {
     super(props);
+    this.state = {
+      initialRoute: null
+    };
+  }
+
+  componentWillMount() {
+    let initialRoute = {
+      title: 'Dashboard',
+      component: RootTabContainer
+    };
+    AsyncStorage.getItem('apikey').then((value) => {
+      if (value === null) {
+        initialRoute = {
+          title: 'Time Tracker',
+          component: LoginContainer,
+          index: 0
+        };
+      }
+      this.setState({
+        initialRoute,
+      })
+    });
   }
 
   componentDidMount() {
@@ -59,18 +83,20 @@ class MainNavigator extends Component{
   }
 
   render() {
-    return (
+    if (this.state.initialRoute !== null) {
+      return (
         <Navigator
           ref={view => this.navigator = view}
-          initialRoute={{
-            title: 'Time Tracker',
-            component: LoginContainer,
-            index: 0
-          }}
+          initialRoute={this.state.initialRoute}
           renderScene={this.renderScene.bind(this)}
           configureScene={this.configureScene.bind(this)}
           />
-    );
+      );
+    } else {
+      return (
+        <View></View>
+      )
+    }
   }
 };
 

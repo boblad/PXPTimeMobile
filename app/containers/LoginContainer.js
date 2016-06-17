@@ -3,7 +3,6 @@
 import { bindActionCreators } from 'redux';
 
 import { iconStyles } from '../assets/IconStyles';
-import { activityStyles } from '../assets/ActivityStyle';
 import { connect } from 'react-redux';
 import { clearMessages } from '../actions/MessageActions';
 import { loginWithKey, loginWithCreds, setApiKey } from '../actions/LoginActions';
