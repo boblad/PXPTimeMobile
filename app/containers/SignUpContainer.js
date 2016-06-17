@@ -33,6 +33,7 @@ import _ from 'lodash';
 class SignUpContainer extends Component {
   constructor() {
     super();
+    this.hideModalClick = this.hideModalClick.bind(this);
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleSubmitUser = this.handleSubmitUser.bind(this);
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
