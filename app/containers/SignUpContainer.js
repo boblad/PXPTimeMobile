@@ -33,6 +33,7 @@ import _ from 'lodash';
 class SignUpContainer extends Component {
   constructor() {
     super();
+    this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleSubmitUser = this.handleSubmitUser.bind(this);
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
@@ -196,6 +197,10 @@ class SignUpContainer extends Component {
             <TouchableOpacity style={styles.buttonBlue} onPress={this.handleSubmitUser}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
+            <Text style={styles.orText}>- or -</Text>
+            <TouchableOpacity style={styles.buttonClear} onPress={this.handleLoginClick}>
+              <Text style={styles.buttonText}>Log In</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </Image>
@@ -204,6 +209,10 @@ class SignUpContainer extends Component {
 
   hideModalClick() {
     this.props.dispatch(clearMessages());
+  }
+
+  handleLoginClick() {
+    this.props.router.pop();
   }
 
   handleSubmitUser() {
@@ -286,6 +295,7 @@ var styles = StyleSheet.create({
   buttonClear: {
     height: 46,
     width: width-150,
+    marginBottom: 60,
     backgroundColor: 'transparent',
     borderRadius: 23,
     borderColor: 'rgba(255, 255, 255, .6)',
@@ -297,7 +307,6 @@ var styles = StyleSheet.create({
     height: 46,
     width: width-150,
     marginTop: 20,
-    marginBottom: 60,
     backgroundColor: '#0786E7',
     borderRadius: 23,
     alignItems: 'center',
