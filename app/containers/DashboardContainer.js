@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
   timerInput: {
     fontSize: 45,
     color: WHITE,
-    width: width/1.8,
+    width: width/1.5,
     textAlign: 'center'
   },
   timerActionsWrapper: {

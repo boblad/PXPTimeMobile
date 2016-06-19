@@ -107,30 +107,33 @@ class LoginContainer extends Component {
             message={this.props.message.errorMessage}
             hideModalClick={this.hideModalClick} />
         }
-
-        <View style={styles.contentWrapper}>
+        <View style={styles.topContentWrapper}>
           <Image source={pxpLogo} resizeMode="contain" style={styles.logoIcon}/>
+        </View>
+        <View style={styles.contentWrapper}>
           <View style={styles.formWrapper}>
             {
               this.state.showTokenLogin &&
-              <View>
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="API Key"
-                  style={styles.textInput}
-                  onChangeText={this.handleTokenInputChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/lockIcon.png')} />
+              <View style={styles.formFieldsWrapperSmall}>
+                <View style={styles.inputWrap}>
+                  <TextInput
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    placeholder="API Key"
+                    style={styles.textInput}
+                    onChangeText={this.handleTokenInputChange}/>
+                  <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/lockIcon.png')} />
+                </View>
               </View>
             }
             {
               !this.state.showTokenLogin &&
-              <View>
-                <View>
+              <View style={styles.formFieldsWrapper}>
+                <View style={styles.inputWrapWithBorder}>
                   <TextInput
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder="E-mail"
+                    placeholder="Email Address"
                     style={styles.textInput}
                     onChangeText={this.handleUserNameChange}/>
                   <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/emailIcon.png')} />
@@ -148,15 +151,15 @@ class LoginContainer extends Component {
               </View>
             }
           </View>
-          <TouchableOpacity style={styles.buttonBlue} onPress={this.handleLoginClick}>
-            <Text style={styles.buttonText}>Login</Text>
+          <TouchableOpacity style={styles.buttonOrange} onPress={this.handleLoginClick}>
+            <Text style={styles.buttonText}>SIGN IN</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonClear} onPress={this.handleAlternateClick}>
-            <Text style={styles.buttonText}>Sign In with {this.state.signInType}</Text>
+            <Text style={styles.buttonText}>SIGN IN WITH {this.state.signInType.toUpperCase()}</Text>
           </TouchableOpacity>
           <Text style={styles.orText}>- or -</Text>
           <TouchableOpacity style={styles.buttonClear} onPress={this.handleSignUpClick}>
-            <Text style={styles.buttonText}>Sign Up</Text>
+            <Text style={styles.buttonText}>SIGN UP</Text>
           </TouchableOpacity>
         </View>
       </Image>
@@ -178,6 +181,7 @@ class LoginContainer extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
+import { colors } from '../constants/colors';
 
 var styles = StyleSheet.create({
   mainContainer: {
@@ -191,67 +195,88 @@ var styles = StyleSheet.create({
     width: width,
     height: height
   },
+  topContentWrapper: {
+    width: width,
+    height: height/2,
+    paddingTop: height/10,
+    alignItems: 'center'
+  },
   contentWrapper: {
     width: width,
-    height: height,
     position: 'absolute',
-    top: 0,
+    bottom: 0,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    paddingBottom: 20
   },
   logoIcon: {
     width: width/2,
     height: width/3
   },
   mainText: {
-    color: '#FFFFFF',
+    color: colors.WHITE,
     fontSize: 30
   },
-  formWrapper: {
+  formFieldsWrapper: {
+    borderRadius: 3,
+    height: 108,
+    backgroundColor: colors.WHITE,
+    borderColor: colors.LIGHTER_GREY,
+    borderWidth: 2
+  },
+  formFieldsWrapperSmall: {
+    borderRadius: 3,
+    height: 54,
+    backgroundColor: colors.WHITE,
+    borderColor: colors.LIGHTER_GREY,
+    borderWidth: 2
+  },
+  inputWrapWithBorder: {
+    height: 54,
+    width: width-50,
+    borderBottomColor: colors.LIGHTER_GREY,
+    borderBottomWidth: 2
   },
   textInput: {
     height: 54,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
     width: width-50,
-    borderRadius: 5,
-    color: '#A1A6BB',
-    paddingLeft: 46,
-    marginTop: 20
+    color: colors.LIGHT_GREY,
+    paddingLeft: 46
   },
   basicIcon: {
     width: 16,
     height: 16,
     position: 'absolute',
-    top: 39,
+    top: 19,
     left: 15
   },
   buttonClear: {
     height: 46,
-    width: width-150,
+    width: width-50,
     backgroundColor: 'transparent',
-    borderRadius: 23,
-    borderColor: 'rgba(255, 255, 255, .6)',
-    borderWidth: .5,
+    borderRadius: 3,
+    borderColor: colors.WHITE,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  buttonBlue: {
+  buttonOrange: {
     height: 46,
-    width: width-150,
+    width: width-50,
     marginTop: 20,
     marginBottom: 20,
-    backgroundColor: '#0786E7',
-    borderRadius: 23,
+    backgroundColor: colors.PXP_ORANGE,
+    borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center'
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: colors.WHITE,
     fontSize: 16
   },
   orText: {
-    color: '#FFFFFF',
+    color: colors.WHITE,
     fontSize: 14,
     marginTop: 10,
     marginBottom: 10

@@ -36,35 +36,38 @@ class SignUpContainer extends Component {
     this.hideModalClick = this.hideModalClick.bind(this);
     this.handleLoginClick = this.handleLoginClick.bind(this);
     this.handleSubmitUser = this.handleSubmitUser.bind(this);
-    this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
-    this.handleLastNameChange = this.handleLastNameChange.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handleTrelloChange = this.handleTrelloChange.bind(this);
-    this.handlePhoneChange = this.handlePhoneChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    this.handlePasswordConfirmChange = this.handlePasswordConfirmChange.bind(this);
     this.state = {
       first_name: '',
       last_name: '',
       email: '',
       handle: '',
       trello_handle: '',
-      cell_phone: '',
+      cell_phone: '555-555-5555',
       password: '',
       password_confirmation: ''
     }
   }
 
-  handleFirstNameChange(value) {
-    this.setState({
-      first_name: value
-    })
-  }
+  handleNameChange(value) {
+    let nameArray = value.split(' ');
+    let first = '';
+    let last = '';
 
-  handleLastNameChange(value) {
+    if (nameArray.length === 1) {
+      first = nameArray[0];
+    }
+    if (nameArray.length > 1) {
+      first = nameArray[0];
+      last = nameArray[1];
+    }
+
     this.setState({
-      last_name: value
+      first_name: first,
+      last_name: last
     })
   }
 
@@ -74,32 +77,16 @@ class SignUpContainer extends Component {
     })
   }
 
-  handleUsernameChange(value) {
-    this.setState({
-      handle: value
-    })
-  }
-
   handleTrelloChange(value) {
     this.setState({
+      handle: value,
       trello_handle: value
-    })
-  }
-
-  handlePhoneChange(value) {
-    this.setState({
-      cell_phone: value
     })
   }
 
   handlePasswordChange(value) {
     this.setState({
-      password: value
-    })
-  }
-
-  handlePasswordConfirmChange(value) {
-    this.setState({
+      password: value,
       password_confirmation: value
     })
   }
@@ -116,94 +103,53 @@ class SignUpContainer extends Component {
             message={this.props.message.errorMessage}
             hideModalClick={this.hideModalClick} />
         }
-        <ScrollView>
-          <View style={styles.contentWrapper}>
-            <View style={styles.titleWrap}>
-              <Text style={styles.titleText}>Sign Up</Text>
+        <View style={styles.topContentWrapper}>
+          <Image source={pxpLogo} resizeMode="contain" style={styles.logoIcon}/>
+        </View>
+        <View style={styles.contentWrapper}>
+          <View style={styles.formFieldsWrapper}>
+            <View style={styles.inputWrapWithBorder}>
+              <TextInput
+                autoCorrect={false}
+                placeholder="Name"
+                style={styles.textInput}
+                onChangeText={this.handleNameChange}/>
+              <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/userIcon.png')} />
             </View>
-            <View style={styles.formWrapper}>
-              <View>
-                <TextInput
-                  autoCorrect={false}
-                  placeholder="First Name"
-                  style={styles.textInput}
-                  onChangeText={this.handleFirstNameChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/userIcon.png')} />
-              </View>
-              <View>
-                <TextInput
-                  autoCorrect={false}
-                  placeholder="Last Name"
-                  style={styles.textInput}
-                  onChangeText={this.handleLastNameChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/userIcon.png')} />
-              </View>
-              <View>
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="Email"
-                  style={styles.textInput}
-                  onChangeText={this.handleEmailChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/emailIcon.png')} />
-              </View>
-              <View>
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="Username"
-                  style={styles.textInput}
-                  onChangeText={this.handleUsernameChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/userIcon.png')} />
-              </View>
-              <View>
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="Trello Handle (username)"
-                  style={styles.textInput}
-                  onChangeText={this.handleTrelloChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/userIcon.png')} />
-              </View>
-              <View>
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="Cell Phone #"
-                  style={styles.textInput}
-                  onChangeText={this.handlePhoneChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/phoneIcon.png')} />
-              </View>
-              <View>
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="Password"
-                  secureTextEntry={true}
-                  style={styles.textInput}
-                  onChangeText={this.handlePasswordChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/lockIcon.png')} />
-              </View>
-              <View>
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  placeholder="Confirm Password"
-                  secureTextEntry={true}
-                  style={styles.textInput}
-                  onChangeText={this.handlePasswordConfirmChange}/>
-                <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/lockIcon.png')} />
-              </View>
+            <View style={styles.inputWrapWithBorder}>
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="Email Address"
+                style={styles.textInput}
+                onChangeText={this.handleEmailChange}/>
+              <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/emailIcon.png')} />
             </View>
-            <TouchableOpacity style={styles.buttonBlue} onPress={this.handleSubmitUser}>
-              <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-            <Text style={styles.orText}>- or -</Text>
-            <TouchableOpacity style={styles.buttonClear} onPress={this.handleLoginClick}>
-              <Text style={styles.buttonText}>Log In</Text>
-            </TouchableOpacity>
+            <View style={styles.inputWrapWithBorder}>
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="Trello Handle (username)"
+                style={styles.textInput}
+                onChangeText={this.handleTrelloChange}/>
+              <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/userIcon.png')} />
+            </View>
+            <View style={styles.inputWrap}>
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="Password"
+                secureTextEntry={true}
+                style={styles.textInput}
+                onChangeText={this.handlePasswordChange}/>
+              <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/lockIcon.png')} />
+            </View>
           </View>
-        </ScrollView>
+          <View style={styles.signUpButtonDivider} />
+          <TouchableOpacity style={styles.buttonOrange} onPress={this.handleSubmitUser}>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </Image>
     );
   }
@@ -244,6 +190,7 @@ class SignUpContainer extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
+import { colors } from '../constants/colors';
 
 var styles = StyleSheet.create({
   mainContainer: {
@@ -257,19 +204,23 @@ var styles = StyleSheet.create({
     width: width,
     height: height
   },
-  contentWrapper: {
+  topContentWrapper: {
     width: width,
-    alignItems: 'center',
-    backgroundColor: 'transparent'
-  },
-  titleWrap: {
-    width: width,
-    marginTop: 40,
+    height: height/2,
+    paddingTop: height/10,
     alignItems: 'center'
   },
-  titleText: {
-    fontSize: 30,
-    color: '#FFFFFF'
+  contentWrapper: {
+    width: width,
+    position: 'absolute',
+    bottom: 0,
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    paddingBottom: 20
+  },
+  logoIcon: {
+    width: width/2,
+    height: width/3
   },
   mainText: {
     color: '#FFFFFF',
@@ -277,39 +228,49 @@ var styles = StyleSheet.create({
   },
   formWrapper: {
   },
+  formFieldsWrapper: {
+    borderRadius: 3,
+    height: 216,
+    backgroundColor: colors.WHITE,
+    borderColor: colors.LIGHTER_GREY,
+    borderWidth: 2
+  },
+  inputWrapWithBorder: {
+    height: 54,
+    width: width-50,
+    borderBottomColor: colors.LIGHTER_GREY,
+    borderBottomWidth: 2
+  },
   textInput: {
     height: 54,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: 'transparent',
     width: width-50,
-    borderRadius: 5,
-    color: '#A1A6BB',
-    paddingLeft: 46,
-    marginTop: 20
+    color: colors.LIGHT_GREY,
+    paddingLeft: 46
   },
   basicIcon: {
     width: 16,
     height: 16,
     position: 'absolute',
-    top: 39,
+    top: 19,
     left: 15
   },
   buttonClear: {
     height: 46,
-    width: width-150,
-    marginBottom: 60,
+    width: width-50,
     backgroundColor: 'transparent',
-    borderRadius: 23,
-    borderColor: 'rgba(255, 255, 255, .6)',
-    borderWidth: .5,
+    borderRadius: 3,
+    borderColor: colors.WHITE,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
-  buttonBlue: {
+  buttonOrange: {
     height: 46,
-    width: width-150,
+    width: width-50,
     marginTop: 20,
-    backgroundColor: '#0786E7',
-    borderRadius: 23,
+    backgroundColor: colors.PXP_ORANGE,
+    borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -322,6 +283,12 @@ var styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 10,
     marginBottom: 10
+  },
+  signUpButtonDivider: {
+    width: width,
+    height: 2,
+    marginTop: 20,
+    backgroundColor: colors.LIGHTER_GREY
   }
 });
 
