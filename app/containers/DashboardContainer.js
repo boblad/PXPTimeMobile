@@ -31,10 +31,7 @@ const TEXT_GREY = 'rgb(186, 186, 186)';
 const BLUE = 'rgb(23, 108, 230)';
 const LIGHT_BLUE = 'rgb(118, 155, 239)';
 const TEAL_BLUE = 'rgb(75, 145, 230)';
-const WHITE = '#FFFFFF';
 
-
-const { width, height } = Dimensions.get('window');
 
 const normalizeTime = (time) => {
   if (time < 10) {
@@ -259,7 +256,7 @@ class DashboardContainer extends Component {
         {
           text: 'DELETE',
           backgroundColor: '#EB4E35',
-          color: WHITE,
+          color: colors.WHITE,
           onPress: this.handleDeleteEntry.bind(this, ent.entry.apikey),
         }
       ]
@@ -270,7 +267,7 @@ class DashboardContainer extends Component {
           <View style={styles.entriesWrap}>
             <View style={styles.entries}>
               <View style={styles.iconWrap}>
-                <Image style={styles.icon} resizeMode="contain" source={require("./images/timeIcon.png")}/>
+                <Image style={styles.icon} resizeMode="contain" source={require("./images/timeIconLight.png")}/>
               </View>
               <View style={styles.leftInfoWrap}>
                 <Text style={styles.entriesText}>{ent.client.public.name}</Text>
@@ -299,87 +296,71 @@ class DashboardContainer extends Component {
   render() {
     return (
         <View style={styles.mainContainer}>
-          <LinearGradient colors={['#008DE7', '#3B55E7']}>
-            <View style={styles.topContainer}>
-              <View style={styles.timerInputWrap}>
-                <TextInput
-                  ref="Timer"
-                  style={styles.timerInput}
-                  value={this.state.timer}
-                  keyboardType="numbers-and-punctuation"
-                  underlineColorAndroid="transparent"
-                  onChangeText={this.handleTimeTextChange}/>
-              </View>
-              <View style={styles.timerActionsWrapper}>
-                <View style={styles.timerActionsSection}>
-                  {
-                    !this.state.isRunning &&
-                    <TouchableOpacity style={styles.timerActionsSection} onPress={this.handleStart}>
-                      <Text style={styles.timerActionText}>Start</Text>
-                    </TouchableOpacity>
-                  }
-                  {
-                    this.state.isRunning &&
-                    <TouchableOpacity style={styles.timerActionsSection} onPress={this.handleStop}>
-                      <Text style={styles.timerActionText}>Stop</Text>
-                    </TouchableOpacity>
-                  }
-                </View>
-                <View style={styles.timerActionsSection}>
-                  <TouchableOpacity style={styles.timerActionsSection} onPress={this.handleSubmit}>
-                    <Text style={styles.timerActionText}>Submit</Text>
+          <View style={styles.topContainer}>
+            <View style={styles.timerInputWrap}>
+              <TextInput
+                ref="Timer"
+                style={styles.timerInput}
+                value={this.state.timer}
+                keyboardType="numbers-and-punctuation"
+                underlineColorAndroid="transparent"
+                onChangeText={this.handleTimeTextChange}/>
+            </View>
+            <View style={styles.timerActionsWrapper}>
+              <View style={styles.timerActionsSection}>
+                {
+                  !this.state.isRunning &&
+                  <TouchableOpacity style={styles.timerActionsSection} onPress={this.handleStart}>
+                    <Text style={styles.timerActionText}>START</Text>
                   </TouchableOpacity>
-                </View>
+                }
+                {
+                  this.state.isRunning &&
+                  <TouchableOpacity style={styles.timerActionsSection} onPress={this.handleStop}>
+                    <Text style={styles.timerActionText}>STOP</Text>
+                  </TouchableOpacity>
+                }
               </View>
-            </View>
-            <View style={styles.resetButtonWrapper}>
-              {
-                (this.state.timer !== "00:00:00" && this.state.isRunning === false) &&
-                <TouchableOpacity style={styles.resetButton} onPress={this.handleClearTime}>
-                  <Text style={styles.resetButtonText}>Reset</Text>
+              <View style={styles.timerActionsSection}>
+                <TouchableOpacity style={styles.timerActionsSection} onPress={this.handleSubmit}>
+                  <Text style={styles.timerActionText}>SUBMIT</Text>
                 </TouchableOpacity>
-              }
+              </View>
             </View>
-          </LinearGradient>
-            <TouchableOpacity style={styles.entries} onPress={this.handleBoardSelectClick}>
-              <View style={styles.iconWrap}>
-                <Image style={styles.icon} resizeMode="contain" source={require("./images/cardIcon.png")}/>
-              </View>
-              <View style={styles.leftInfoWrap}>
-                {
-                  (Object.keys(this.props.boards.selectedBoard).length > 0) &&
-                  <Text style={styles.entriesText}>{this.props.boards.selectedBoard.public.name}</Text>
-                }
-                {
-                  (Object.keys(this.props.boards.selectedBoard).length === 0) &&
-                  <Text style={styles.entriesText}>Choose a Board</Text>
-                }
-              </View>
-              <View style={styles.rightInfoWrap}>
-                <Text style={styles.entriesText}>></Text>
-              </View>
+          </View>
+          <View style={styles.resetButtonWrapper}>
+            {
+              (this.state.timer !== "00:00:00" && this.state.isRunning === false) &&
+              <TouchableOpacity style={styles.resetButton} onPress={this.handleClearTime}>
+                <Text style={styles.resetButtonText}>RESET</Text>
+              </TouchableOpacity>
+            }
+          </View>
+          <View style={styles.buttonWrap}>
+            <TouchableOpacity style={styles.buttonClear} onPress={this.handleBoardSelectClick}>
+              {
+                (Object.keys(this.props.boards.selectedBoard).length > 0) &&
+                <Text style={styles.buttonText}>{this.props.boards.selectedBoard.public.name}</Text>
+              }
+              {
+                (Object.keys(this.props.boards.selectedBoard).length === 0) &&
+                <Text style={styles.buttonText}>Choose a Board</Text>
+              }
             </TouchableOpacity>
-            <TouchableOpacity style={styles.entries} onPress={this.handleCardSelectClick}>
-              <View style={styles.iconWrap}>
-                <Image style={styles.icon} resizeMode="contain" source={require("./images/cardIcon.png")}/>
-              </View>
-              <View style={styles.leftInfoWrap}>
-                {
-                  (!_.isUndefined(this.props.cards.selectedCard.public)) &&
-                  <Text style={styles.entriesText}>{this.props.cards.selectedCard.public.name}</Text>
-                }
-                {
-                  (_.isUndefined(this.props.cards.selectedCard.public)) &&
-                  <Text style={styles.entriesText}>Choose a Card</Text>
-                }
-              </View>
-              <View style={styles.rightInfoWrap}>
-                <Text style={styles.entriesText}>></Text>
-              </View>
+            <TouchableOpacity style={styles.buttonClear} onPress={this.handleCardSelectClick}>
+              {
+                (!_.isUndefined(this.props.cards.selectedCard.public)) &&
+                <Text style={styles.buttonText}>{this.props.cards.selectedCard.public.name}</Text>
+              }
+              {
+                (_.isUndefined(this.props.cards.selectedCard.public)) &&
+                <Text style={styles.buttonText}>Choose a Card</Text>
+              }
             </TouchableOpacity>
+          </View>
           <View style={styles.bottomContent}>
             <View style={styles.dayBar}>
-              <Text style={styles.dayBarText}>Today</Text>
+              <Text style={styles.dayBarText}>TODAY</Text>
             </View>
             <ScrollView>
               <View>
@@ -424,10 +405,13 @@ class DashboardContainer extends Component {
   }
 }
 
+const { width, height } = Dimensions.get('window');
+import { colors } from '../constants/colors';
+
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.DARKER_GREY,
     width: width,
     height: height
   },
@@ -441,12 +425,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: '#E4E7F0',
+    borderColor: colors.PXP_GREY,
     borderBottomWidth: .5
   },
   timerInput: {
     fontSize: 45,
-    color: WHITE,
+    color: colors.PXP_ORANGE,
     width: width/1.5,
     textAlign: 'center'
   },
@@ -458,14 +442,16 @@ const styles = StyleSheet.create({
   timerActionsSection: {
     width: width/2,
     height: height/9,
-    borderColor: '#E4E7F0',
+    borderColor: colors.PXP_GREY,
     borderRightWidth: .5,
+    borderBottomWidth: .5,
     marginLeft: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
   timerActionText: {
-    color: WHITE,
+    color: colors.PXP_ORANGE,
+    fontSize: 16,
     backgroundColor: 'transparent'
   },
   resetButtonWrapper: {
@@ -479,25 +465,44 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   resetButtonText: {
-    color: WHITE
+    color: colors.WHITE,
+    fontSize: 16
   },
   bottomContent: {
     width: width,
     height: (height - ((height/3) + 40) - 50)
   },
+  buttonWrap: {
+    width: width,
+    alignItems: 'center',
+    marginTop: 15
+  },
+  buttonClear: {
+    height: 46,
+    width: width-50,
+    backgroundColor: 'transparent',
+    borderRadius: 3,
+    borderColor: colors.WHITE,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 15
+  },
+  buttonText: {
+    color: colors.WHITE,
+    fontSize: 16
+  },
   dayBar: {
     width: width,
     height: 40,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: GREY,
-    borderBottomWidth: .5,
-    borderColor: GREY
+    backgroundColor: colors.PXP_GREY
   },
   dayBarText: {
-    marginLeft: 20,
-    fontSize: 12
+    fontSize: 16,
+    color: colors.WHITE
   },
   noEntriesWrap: {
     width: width-40,
@@ -510,8 +515,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomWidth: .5,
     alignItems: 'center',
-    borderColor: GREY,
-    backgroundColor: WHITE
+    borderColor: colors.PXP_GREY,
+    backgroundColor: colors.DARKER_GREY
   },
   entries: {
     width: width,
@@ -549,17 +554,7 @@ const styles = StyleSheet.create({
   },
   entriesText: {
     fontSize: 12,
-    color: TEXT_GREY
-  },
-  bottomBar: {
-    width: width,
-    height: 50,
-    position: 'absolute',
-    bottom: 0,
-    backgroundColor: LIGHT_GREY
-  },
-  hoursText: {
-    fontSize: 14
+    color: colors.WHITE
   }
 });
 

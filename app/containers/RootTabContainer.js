@@ -14,6 +14,8 @@ import WeekContainer from './WeekContainer';
 import TabNavigator from 'react-native-tab-navigator';
 import { connect } from 'react-redux';
 
+import { colors } from '../constants/colors';
+
 
 class RootTabContainer extends Component {
   constructor(props) {
@@ -26,44 +28,54 @@ class RootTabContainer extends Component {
 
   render() {
     return (
-      <TabNavigator>
+      <TabNavigator tabBarStyle={{ backgroundColor: colors.PXP_GREY }}>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'timer'}
+          selectedTitleStyle={{ color: colors.WHITE }}
           title="Timer"
+          titleStyle={{ color: colors.BLACK }}
           renderIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/timeIcon.png')} />}
-          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/timeIcon.png')} />}
+          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/timeIconLight.png')} />}
           onPress={() => this.setState({ selectedTab: 'timer' })}>
           <DashboardContainer {...this.props} />
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'weekly'}
+          selectedTitleStyle={{ color: colors.WHITE }}
           title="Weekly"
+          titleStyle={{ color: colors.BLACK }}
           renderIcon={() => <Image resizeMode="contain" style={{height: 23}} source={require('./images/weeklyIcon.png')} />}
-          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 23}} source={require('./images/weeklyIcon.png')} />}
+          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 23}} source={require('./images/weeklyIconLight.png')} />}
           onPress={() => this.setState({ selectedTab: 'weekly' })}>
           <WeekContainer {...this.props} />
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'invoices'}
+          selectedTitleStyle={{ color: colors.WHITE }}
           title="Invoices"
+          titleStyle={{ color: colors.BLACK }}
           renderIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/invoicesIcon.png')} />}
-          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/invoicesIcon.png')} />}
+          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/invoicesIconLight.png')} />}
           onPress={() => this.setState({ selectedTab: 'invoices' })}>
           <InvoicesContainer {...this.props} />
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'reports'}
+          selectedTitleStyle={{ color: colors.WHITE }}
           title="Reports"
+          titleStyle={{ color: colors.BLACK }}
           renderIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/reportsIcon.png')} />}
-          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/reportsIcon.png')} />}
+          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/reportsIconLight.png')} />}
           onPress={() => this.setState({ selectedTab: 'reports' })}>
           <ReportsContainer {...this.props} />
         </TabNavigator.Item>
         <TabNavigator.Item
           selected={this.state.selectedTab === 'settings'}
+          selectedTitleStyle={{ color: colors.WHITE }}
           title="Settings"
+          titleStyle={{ color: colors.BLACK }}
           renderIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/settingsIcon.png')} />}
-          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/settingsIcon.png')} />}
+          renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/settingsIconLight.png')} />}
           onPress={() => this.setState({ selectedTab: 'settings' })}>
           <SettingsContainer {...this.props} />
         </TabNavigator.Item>

@@ -43,11 +43,14 @@ class Card extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
+import { colors } from '../constants/colors';
 
 const styles = StyleSheet.create({
   selectListItem: {
-    width: width-40,
-    height: 70,
+    width: width,
+    height: 50,
+    borderColor: colors.PXP_GREY,
+    borderBottomWidth: .5,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start'
@@ -55,19 +58,16 @@ const styles = StyleSheet.create({
   selectedIcon: {
     width: width/16,
     height: 25,
-    marginTop: 20,
-    marginRight: 20
+    marginRight: 15,
+    marginLeft: 15
   },
   selectListItemTextWrap: {
-    height: 70,
+    height: 50,
     width: width-60-(width/16),
-    borderColor: '#E4E7F0',
-    borderBottomWidth: 1,
     justifyContent: 'center'
   },
   selectListItemText: {
-    marginTop: 20,
-    color: '#A1A6BB'
+    color: colors.PXP_GREY
   }
 });
 

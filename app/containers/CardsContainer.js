@@ -92,7 +92,7 @@ class CardsContainer extends Component {
               <Image style={styles.backIcon} resizeMode="contain" source={require('./images/backIcon.png')} />
             </TouchableOpacity>
             <View style={styles.navTitle}>
-              <Text style={styles.navTitleText}>Boards</Text>
+              <Text style={styles.navTitleText}>Cards</Text>
             </View>
           </View>
         }
@@ -132,11 +132,12 @@ class CardsContainer extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
+import { colors } from '../constants/colors';
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.DARKER_GREY,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -146,7 +147,9 @@ const styles = StyleSheet.create({
     top: 0,
     paddingTop: 29,
     position: 'absolute',
-    backgroundColor: '#0786E7'
+    backgroundColor: colors.DARKER_GREY,
+    borderBottomWidth: .5,
+    borderBottomColor: colors.PXP_GREY
   },
   navTitle: {
     width: width/2,
@@ -157,36 +160,20 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   navTitleText: {
-    color: '#FFFFFF',
+    color: colors.PXP_ORANGE,
     fontSize: 18
   },
   backIcon: {
     height: 22
   },
-  searchInputWrap: {
-    position: 'absolute',
-    top: 60,
-    width: width,
-    height: 70
-  },
-  searchInput: {
-    backgroundColor: 'rgb(240, 240, 240)',
-    height: 30,
-    width: width-40,
-    borderRadius: 5,
-    marginLeft: 20,
-    marginTop: 20,
-    paddingLeft: 10,
-    paddingRight: 10
-  },
   boardListWrapper: {
     width: width,
-    height: height-130,
+    height: height-60,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 20,
     marginRight: 20,
-    marginTop: 130
+    marginTop: 60
   },
   scrollContainer: {
     width: width

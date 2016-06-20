@@ -75,11 +75,13 @@ class BoardsContainer extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
+import { colors } from '../constants/colors';
+
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.DARKER_GREY,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -89,7 +91,9 @@ const styles = StyleSheet.create({
     top: 0,
     paddingTop: 29,
     position: 'absolute',
-    backgroundColor: '#0786E7'
+    backgroundColor: colors.DARKER_GREY,
+    borderBottomWidth: .5,
+    borderBottomColor: colors.PXP_GREY
   },
   navTitle: {
     width: width/2,
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   navTitleText: {
-    color: '#FFFFFF',
+    color: colors.PXP_ORANGE,
     fontSize: 18
   },
   backIcon: {
