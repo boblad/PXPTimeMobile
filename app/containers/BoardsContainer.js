@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   backIcon: {
-    height: 22
+    height: 22,
+    marginLeft: 15
   },
   boardListWrapper: {
     width: width,

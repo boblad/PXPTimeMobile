@@ -82,6 +82,7 @@ class InvoicesContainer extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
+import { colors } from '../constants/colors';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -95,7 +96,9 @@ const styles = StyleSheet.create({
     top: 0,
     paddingTop: 29,
     position: 'absolute',
-    backgroundColor: '#0786E7'
+    backgroundColor: colors.DARKER_GREY,
+    borderBottomWidth: .5,
+    borderBottomColor: colors.PXP_GREY
   },
   navTitle: {
     width: width/2,
@@ -106,7 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   navTitleText: {
-    color: '#FFFFFF',
+    color: colors.PXP_ORANGE,
     fontSize: 18
   },
   contentContainer: {
@@ -115,7 +118,8 @@ const styles = StyleSheet.create({
     marginTop: 60,
     flex: 4,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    backgroundColor: colors.DARKER_GREY
   },
   sectionTotal: {
     width: width-40,

@@ -53,43 +53,56 @@ class InvoicesContainer extends Component {
             }
           </View>
         </ScrollView>
-        <View style={styles.topBar}>
-          <Text style={styles.topBarTitle}>Invoices</Text>
+        <View style={styles.navWrapper}>
+          <View style={styles.navTitle}>
+            <Text style={styles.navTitleText}>Invoices</Text>
+          </View>
         </View>
       </View>
     );
   }
 }
 
+import { colors } from '../constants/colors';
+
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: BLUE
+    backgroundColor: colors.DARKER_GREY
   },
   mainContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: BLUE,
+    backgroundColor: colors.DARKER_GREY,
     paddingTop: 60
   },
   invoiceScroll: {
     width: width,
     height: height
   },
-  topBar: {
+  navWrapper: {
     width: width,
-    backgroundColor: BLUE,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    top: 0,
+    paddingTop: 29,
     position: 'absolute',
-    top: 0
+    backgroundColor: colors.DARKER_GREY,
+    borderBottomWidth: .5,
+    borderBottomColor: colors.PXP_GREY
   },
-  topBarTitle: {
-    fontSize: 20,
-    color: WHITE
+  navTitle: {
+    width: width/2,
+    position: 'absolute',
+    left: (width/2)-(width/4),
+    top: 29,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  navTitleText: {
+    color: colors.PXP_ORANGE,
+    fontSize: 18
   }
 });
 

@@ -67,11 +67,9 @@ class WeekContainer extends Component {
       <View style={styles.mainContainer}>
         <StatusBar barStyle="light-content"/>
         <View style={styles.statsWrap}>
-          <View style={styles.navBarWrap}>
-            <View style={styles.navBar}>
-              <View style={styles.navBarTitle}>
-                <Text style={styles.navTitleText}>Weekly</Text>
-              </View>
+          <View style={styles.navWrapper}>
+            <View style={styles.navTitle}>
+              <Text style={styles.navTitleText}>Settings</Text>
             </View>
           </View>
           <View style={styles.barChartWrap}>
@@ -141,11 +139,11 @@ class WeekContainer extends Component {
                                 </Text>
                               </View>
                               <View style={styles.rightInfoWrap}>
-                                <Text style={styles.priceText}>
-                                  {toTimeString(ent.entry.hours, ent.entry.minutes)}
+                                <Text style={styles.purchaseText}>
+                                  {ent.entry.hours} hrs
                                 </Text>
                                 <Text style={styles.purchaseText}>
-                                  {ent.entry.status} >
+                                  {ent.entry.minutes} mins
                                 </Text>
                               </View>
                             </View>
@@ -172,13 +170,6 @@ export default connect(state => ({
   })
 )(WeekContainer);
 
-const GREY = 'rgb(240, 240, 240)';
-const LIGHT_GREY = 'rgb(238, 238, 238)';
-const TEXT_GREY = 'rgb(186, 186, 186)';
-const BLUE = 'rgb(23, 108, 230)';
-const LIGHT_BLUE = 'rgb(118, 155, 239)';
-const TEAL_BLUE = 'rgb(75, 145, 230)';
-
 const { width, height } = Dimensions.get('window');
 import { colors } from '../constants/colors';
 
@@ -187,13 +178,38 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.WHITE,
     width: width,
-    height: height
+    height: height,
+    backgroundColor: colors.DARKER_GREY
+  },
+  navWrapper: {
+    width: width,
+    height: 60,
+    top: 0,
+    paddingTop: 29,
+    position: 'absolute',
+    backgroundColor: colors.DARKER_GREY,
+    borderBottomWidth: .5,
+    borderBottomColor: colors.PXP_GREY
+  },
+  navTitle: {
+    width: width/2,
+    position: 'absolute',
+    left: (width/2)-(width/4),
+    top: 29,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  navTitleText: {
+    color: colors.PXP_ORANGE,
+    fontSize: 18
   },
   navBarWrap: {
     width: width,
     height: 60,
     flexDirection: 'row',
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
+    borderBottomWidth: .5,
+    borderBottomColor: colors.PXP_GREY
   },
   navBar: {
     width: width,
@@ -215,17 +231,9 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  navBarSpacer: {
-    width: width,
-    height: 30
-  },
   navTitleText: {
     fontSize: 18,
     color: colors.PXP_ORANGE
-  },
-  currentBalenceText: {
-    color: colors.WHITE,
-    fontSize: 20
   },
   statsWrap: {
     width: width,
@@ -234,7 +242,7 @@ var styles = StyleSheet.create({
   },
   barChartWrap: {
     width: width,
-    height: (height/3) - 30,
+    height: (height/3) + 40,
     flexDirection: 'row',
     justifyContent: 'space-around',
     padding: 10,
@@ -355,6 +363,7 @@ var styles = StyleSheet.create({
     marginLeft: 10
   },
   priceText: {
-    fontSize: 14
+    fontSize: 14,
+    color: colors.WHITE
   }
 });

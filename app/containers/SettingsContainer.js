@@ -39,7 +39,7 @@ class SettingsContainer extends Component {
         </View>
         <View>
           <View>
-            <TouchableOpacity style={styles.buttonBlue} onPress={this.handleLogoutClick}>
+            <TouchableOpacity style={styles.buttonOrange} onPress={this.handleLogoutClick}>
               <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>
           </View>
@@ -54,12 +54,14 @@ class SettingsContainer extends Component {
 }
 
 const { width, height } = Dimensions.get('window');
+import { colors } from '../constants/colors';
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: colors.DARKER_GREY
   },
   navWrapper: {
     width: width,
@@ -67,7 +69,9 @@ const styles = StyleSheet.create({
     top: 0,
     paddingTop: 29,
     position: 'absolute',
-    backgroundColor: '#0786E7'
+    backgroundColor: colors.DARKER_GREY,
+    borderBottomWidth: .5,
+    borderBottomColor: colors.PXP_GREY
   },
   navTitle: {
     width: width/2,
@@ -78,15 +82,15 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   navTitleText: {
-    color: '#FFFFFF',
+    color: colors.PXP_ORANGE,
     fontSize: 18
   },
-  buttonBlue: {
+  buttonOrange: {
     height: 46,
-    width: width-150,
+    width: width-50,
     marginTop: 20,
-    backgroundColor: '#0786E7',
-    borderRadius: 23,
+    backgroundColor: colors.PXP_ORANGE,
+    borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center'
   },

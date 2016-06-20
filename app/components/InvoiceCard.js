@@ -12,15 +12,6 @@ import React, {
 
 const { width, height } = Dimensions.get('window');
 
-const GREY = 'rgb(240, 240, 240)';
-const LIGHT_GREY = 'rgb(238, 238, 238)';
-const TEXT_GREY = 'rgb(186, 186, 186)';
-const BLUE = 'rgb(23, 108, 230)';
-const LIGHT_BLUE = 'rgb(118, 155, 239)';
-const TEAL_BLUE = 'rgb(75, 145, 230)';
-const WHITE = '#FFFFFF';
-const GREY_TEXT = 'rgb(195, 195, 195)';
-
 class InvoiceCard extends Component {
   render() {
     const { invoice } = this.props;
@@ -42,7 +33,7 @@ class InvoiceCard extends Component {
                   {invoice.client.public.name}
                 </Text>
               </View>
-              <View style={styles.savingsCardRow}>
+              <View>
                 <Text style={styles.greyCardText}>
                   {invoice.board.public.name}
                 </Text>
@@ -50,11 +41,7 @@ class InvoiceCard extends Component {
             </View>
             <View style={styles.savingsCardBottom}>
               <View style={styles.savingsCardRow}>
-                <Image
-                  style={styles.savingsCardIcon}
-                  resizeMode="contain"
-                  source={require('./images/infoIcon.png')} />
-                <Text style={styles.cardDescriptionText}>
+                <Text style={styles.greyCardText}>
                   {moment(invoice.public.created_at).format('MMMM Do YYYY')}
                 </Text>
               </View>
@@ -71,10 +58,11 @@ class InvoiceCard extends Component {
   }
 }
 
-let cardLenth = ((width * 2) / 3);
+let cardLenth = ((width - 50));
 let cardHeight = ((height/3) - 100);
 let blueHeight = (height/3) + 40;
 
+import { colors } from '../constants/colors';
 
 const styles = StyleSheet.create({
   barChartWrap: {
@@ -88,14 +76,12 @@ const styles = StyleSheet.create({
   savingsCardWrap: {
     width: cardLenth,
     height: cardHeight,
-    backgroundColor: WHITE,
-    borderRadius: 5
+    backgroundColor: colors.PXP_GREY
   },
   savingsCard: {
     width: cardLenth,
     height: cardHeight,
-    backgroundColor: WHITE,
-    borderRadius: 5,
+    backgroundColor: colors.PXP_GREY,
     flex: 3,
     flexDirection: 'column'
   },
@@ -109,28 +95,28 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   boldText: {
-    fontWeight: 'bold'
+    color: colors.WHITE
   },
   percentText: {
-    color: BLUE
+    color: colors.WHITE
   },
   savingsCardMiddle: {
     height: cardHeight / 3,
     width: cardLenth,
     flexDirection: 'row',
-    paddingLeft: 10,
+    justifyContent: 'space-between',
     paddingRight: 10,
-    justifyContent: 'space-around',
+    paddingLeft: 10,
     alignItems: 'center'
   },
     savingsCardRow: {
     justifyContent: 'flex-start',
     alignItems: 'center',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    width: width/2
   },
   greyCardText: {
-    color: TEXT_GREY,
-    marginLeft: 10
+    color: colors.WHITE
   },
   savingsCardIcon: {
     width: 15,
@@ -153,12 +139,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderTopWidth: 1,
-    borderColor: GREY
-  },
-  cardDescriptionText: {
-    color: TEXT_GREY,
-    marginLeft: 10,
-    fontSize: 10
+    borderTopColor: colors.LIGHTER_GREY
   }
 });
 
