@@ -4,8 +4,10 @@ import { setApiKey } from '../actions/LoginActions';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { getDayEntries } from '../helpers/TimeHelpers';
+import TimerMixin from 'react-timer-mixin';
 var Swipeout = require('react-native-swipeout')
 var dismissKeyboard = require('dismissKeyboard');
+var reactMixin = require('react-mixin');
 
 import React, {
   Alert,
@@ -22,15 +24,7 @@ import React, {
   View
 } from 'react-native';
 
-import LinearGradient from 'react-native-linear-gradient';
 import moment from 'moment';
-
-const GREY = 'rgb(240, 240, 240)';
-const LIGHT_GREY = 'rgb(238, 238, 238)';
-const TEXT_GREY = 'rgb(186, 186, 186)';
-const BLUE = 'rgb(23, 108, 230)';
-const LIGHT_BLUE = 'rgb(118, 155, 239)';
-const TEAL_BLUE = 'rgb(75, 145, 230)';
 
 
 const normalizeTime = (time) => {
@@ -39,6 +33,7 @@ const normalizeTime = (time) => {
   }
   return time;
 };
+
 
 class DashboardContainer extends Component {
   constructor() {
@@ -97,8 +92,10 @@ class DashboardContainer extends Component {
 
   handleAppStateChange(currentAppState) {
     if (currentAppState === 'inactive' || currentAppState === 'background') {
+
       this.handleAppBackground();
     } else if (currentAppState === 'active') {
+
       this.handleAppForeground();
     }
     this.setState({ currentAppState, });
@@ -109,11 +106,13 @@ class DashboardContainer extends Component {
       this.setState({
         backgroundTime: new Date(),
       });
+
+      this.handleStop();
     }
   }
 
   handleAppForeground() {
-    if (this.state.isRunning && this.state.backgroundTime !== '') {
+    if (!this.state.isRunning && this.state.backgroundTime !== '') {
       const { backgroundTime } = this.state;
       let timeDiff = new Date() - backgroundTime;
       let formattedTimeDiff = moment.utc(timeDiff).format("HH:mm:ss");
@@ -130,13 +129,15 @@ class DashboardContainer extends Component {
         timer: totalTime,
         backgroundTime: ''
       });
+
+      this.handleStart();
     }
   }
 
   handleStart() {
     this.setState({
       startTime: !this.state.startTime ? new Date() : this.state.startTime,
-      interval: setInterval(this.tick, 1000),
+      interval: this.setInterval(this.tick, 1000),
       isRunning: true
     })
   }
@@ -144,7 +145,7 @@ class DashboardContainer extends Component {
   handleStop() {
     this.setState({
       endTime: new Date(),
-      interval: clearInterval(this.state.interval),
+      interval: this.clearInterval(this.state.interval),
       isRunning: false
     })
   }
@@ -557,6 +558,8 @@ const styles = StyleSheet.create({
     color: colors.WHITE
   }
 });
+
+reactMixin(DashboardContainer.prototype, TimerMixin);
 
 export default connect(state => ({
     boards: state.boards,
