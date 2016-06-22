@@ -51,19 +51,28 @@ class DashboardContainer extends Component {
     this.handleAppBackground = this.handleAppBackground.bind(this);
     this.handleAppForeground = this.handleAppForeground.bind(this);
     this.getEntries = this.getEntries.bind(this);
-    this.state = {
-      timer: '00:00:00',
-      startTime: null,
-      endTime: null,
-      isRunning: false,
-      currentAppState: AppState.currentState,
-      backgroundTime: ''
-    }
+    AsyncStorage.getItem('state').then((value) => {
+      if (_.isUndefined(value) || value === null) {
+        this.state = {
+          timer: '00:00:00',
+          startTime: null,
+          endTime: null,
+          isRunning: false,
+          currentAppState: AppState.currentState,
+          backgroundTime: '',
+          lastTick: '',
+          paused: true
+        }
+      } else {
+        oldState = JSON.parse(value);
+        this.state = oldState;
+        this.handleAppForeground();
+      }
+    }).done()
   }
 
   componentWillMount() {
     this.setState({
-      searchValue: '',
       isRunning: false
     });
     let startDate = moment().format('YYYY-MM-DD');
@@ -92,29 +101,35 @@ class DashboardContainer extends Component {
 
   handleAppStateChange(currentAppState) {
     if (currentAppState === 'inactive' || currentAppState === 'background') {
-
       this.handleAppBackground();
     } else if (currentAppState === 'active') {
-
       this.handleAppForeground();
     }
     this.setState({ currentAppState, });
   }
 
   handleAppBackground() {
-    if (this.state.isRunning) {
+    if (!_.isUndefined(this.state.isRunning) && this.state.isRunning) {
       this.setState({
         backgroundTime: new Date(),
       });
-
-      this.handleStop();
+      this.handleStop(paused=false);
+    }
+    if (this.state.timer !== '00:00:00') {
+      AsyncStorage.setItem('state', JSON.stringify(this.state));
     }
   }
 
   handleAppForeground() {
-    if (!this.state.isRunning && this.state.backgroundTime !== '') {
-      const { backgroundTime } = this.state;
-      let timeDiff = new Date() - backgroundTime;
+    const { backgroundTime, lastTick, isRunning, paused } = this.state;
+    let tickTimeDiff = new Date() - new Date(lastTick);
+    if (!paused && backgroundTime !== '' || backgroundTime === '' && tickTimeDiff > 2000 && !paused) {
+      let timeDiff = '';
+      if (backgroundTime !== '') {
+        timeDiff = new Date() - new Date(backgroundTime);
+      } else {
+        timeDiff = tickTimeDiff;
+      }
       let formattedTimeDiff = moment.utc(timeDiff).format("HH:mm:ss");
       let timeDiffArray = formattedTimeDiff.split(':');
       let timeArray = this.state.timer.split(':');
@@ -132,6 +147,7 @@ class DashboardContainer extends Component {
 
       this.handleStart();
     }
+    AsyncStorage.removeItem('state');
   }
 
   handleStart() {
@@ -142,11 +158,12 @@ class DashboardContainer extends Component {
     })
   }
 
-  handleStop() {
+  handleStop(paused=true) {
     this.setState({
       endTime: new Date(),
       interval: this.clearInterval(this.state.interval),
-      isRunning: false
+      isRunning: false,
+      paused
     })
   }
 
@@ -178,7 +195,8 @@ class DashboardContainer extends Component {
       timer: `${normalizeTime(hours)}:${normalizeTime(minutes)}:${normalizeTime(seconds)}`,
       hours: hours,
       minutes: minutes,
-      seconds: seconds
+      seconds: seconds,
+      lastTick: new Date()
     })
   }
 

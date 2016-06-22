@@ -113,12 +113,12 @@ const styles = StyleSheet.create({
   },
   boardListWrapper: {
     width: width,
-    height: height-60,
+    height: height-72,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 20,
     marginRight: 20,
-    marginTop: 60
+    marginTop: 72
   },
   scrollContainer: {
     width: width

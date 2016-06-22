@@ -167,14 +167,32 @@ const styles = StyleSheet.create({
     height: 22,
     marginLeft: 15
   },
+  searchInputWrap: {
+    position: 'absolute',
+    top: 60,
+    width: width,
+    height: 70
+  },
+  searchInput: {
+    backgroundColor: colors.WHITE,
+    height: 40,
+    width: width-40,
+    borderRadius: 5,
+    marginLeft: 20,
+    marginTop: 20,
+    paddingLeft: 10,
+    paddingRight: 10
+  },
   boardListWrapper: {
     width: width,
-    height: height-60,
+    height: height-152,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 20,
     marginRight: 20,
-    marginTop: 60
+    marginTop: 152,
+    borderTopWidth: .5,
+    borderColor: colors.PXP_GREY
   },
   scrollContainer: {
     width: width

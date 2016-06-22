@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   sectionOpen: {
     width: width-40,
     height: (height-60-49-40)/4,
-    backgroundColor: '#E7C400',
+    backgroundColor: colors.PXP_ORANGE,
     alignItems: 'center',
     justifyContent: 'center'
   },
