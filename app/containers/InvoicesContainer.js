@@ -19,14 +19,6 @@ import React, {
 
 const { width, height } = Dimensions.get('window');
 
-const GREY = 'rgb(240, 240, 240)';
-const LIGHT_GREY = 'rgb(238, 238, 238)';
-const TEXT_GREY = 'rgb(186, 186, 186)';
-const BLUE = 'rgb(23, 108, 230)';
-const LIGHT_BLUE = 'rgb(118, 155, 239)';
-const TEAL_BLUE = 'rgb(75, 145, 230)';
-const WHITE = '#FFFFFF';
-const GREY_TEXT = 'rgb(195, 195, 195)';
 
 class InvoicesContainer extends Component {
   constructor() {
@@ -35,7 +27,10 @@ class InvoicesContainer extends Component {
 
   componentWillMount() {
     const { dispatch, user } = this.props;
-    dispatch(listInvoices(user.asyncKey));
+    let startDate = moment().startOf('month').format('YYYY-MM-DD');
+    let endDate = moment().endOf('month').format('YYYY-MM-DD');
+
+    dispatch(listInvoices(user.asyncKey, startDate, endDate));
   }
 
   render() {

@@ -10,28 +10,16 @@ const listInvoiceSuccess = (results) => {
   }
 }
 
-export const listInvoices = (key) => {
+export const listInvoices = (key, startDate, endDate) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
-    InvoiceService.req.listInvoices(key)
+    InvoiceService.req.listInvoices(key, startDate, endDate)
     .then((invoices) => {
       dispatch(listInvoiceSuccess(invoices));
       dispatch(toggleIsLoading(false));
     })
     .catch((err) => {
       dispatch(toggleIsLoading(false));
-    })
-  }
-}
-
-export const listReactBoard = (key) => {
-  return (dispatch) => {
-    InvoiceService.req.listReactBoard(key)
-    .then((times) => {
-      
-    })
-    .catch((err) => {
-
     })
   }
 }

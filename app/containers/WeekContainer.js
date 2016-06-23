@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { listEntries, clearEntries } from '../actions/EntryActions';
+import { listEntries, clearEntries, deleteEntry } from '../actions/EntryActions';
 import Menu from '../components/Menu';
 import TopBar from '../components/TopBar';
 import Loader from '../components/Loader';
@@ -14,6 +14,8 @@ import React, {
   TouchableOpacity, TextInput,
   UIManager
 } from 'react-native';
+
+var Swipeout = require('react-native-swipeout');
 
 
 const normalizeTime = (time) => {
@@ -56,6 +58,11 @@ class WeekContainer extends Component {
     dispatch(listEntries(user.asyncKey, startDate, endDate));
   }
 
+  handleDeleteEntry(entryApiKey) {
+    const { dispatch, user } = this.props;
+    dispatch(deleteEntry(user.asyncKey, entryApiKey));
+  }
+
   render() {
     const { results } = this.props.entries;
     let weeklyEntries = [];
@@ -69,7 +76,7 @@ class WeekContainer extends Component {
         <View style={styles.statsWrap}>
           <View style={styles.navWrapper}>
             <View style={styles.navTitle}>
-              <Text style={styles.navTitleText}>Settings</Text>
+              <Text style={styles.navTitleText}>Weekly</Text>
             </View>
           </View>
           <View style={styles.barChartWrap}>
@@ -121,33 +128,43 @@ class WeekContainer extends Component {
                     </View>
                     {
                       day.map((ent, i) => {
+                        let swipeoutBtns = [
+                          {
+                            text: 'DELETE',
+                            backgroundColor: '#EB4E35',
+                            color: colors.WHITE,
+                            onPress: this.handleDeleteEntry.bind(this, ent.entry.apikey),
+                          }
+                        ]
                         return (
-                          <View key={`bar-${i}`} style={styles.purchaseWrap}>
-                            <View style={styles.purchase}>
-                              <View style={styles.iconWrap}>
-                                <Image
-                                  style={styles.icon}
-                                  resizeMode="contain"
-                                  source={timeIcon}/>
-                              </View>
-                              <View style={styles.leftInfoWrap}>
-                                <Text style={styles.purchaseText}>
-                                  {ent.board.public.name}
-                                </Text>
-                                <Text style={styles.purchaseText}>
-                                  {ent.card.public.name}
-                                </Text>
-                              </View>
-                              <View style={styles.rightInfoWrap}>
-                                <Text style={styles.purchaseText}>
-                                  {ent.entry.hours} hrs
-                                </Text>
-                                <Text style={styles.purchaseText}>
-                                  {ent.entry.minutes} mins
-                                </Text>
+                          <Swipeout key={i} rowID={i} autoClose={true} style={styles.purchaseWrap} right={swipeoutBtns}>
+                            <View key={`bar-${i}`} style={styles.purchaseWrap}>
+                              <View style={styles.purchase}>
+                                <View style={styles.iconWrap}>
+                                  <Image
+                                    style={styles.icon}
+                                    resizeMode="contain"
+                                    source={timeIcon}/>
+                                </View>
+                                <View style={styles.leftInfoWrap}>
+                                  <Text style={styles.purchaseText}>
+                                    {ent.board.public.name}
+                                  </Text>
+                                  <Text style={styles.purchaseText}>
+                                    {ent.card.public.name}
+                                  </Text>
+                                </View>
+                                <View style={styles.rightInfoWrap}>
+                                  <Text style={styles.purchaseText}>
+                                    {ent.entry.hours} hrs
+                                  </Text>
+                                  <Text style={styles.purchaseText}>
+                                    {ent.entry.minutes} mins
+                                  </Text>
+                                </View>
                               </View>
                             </View>
-                          </View>
+                          </Swipeout>
                         )
                       })
                     }

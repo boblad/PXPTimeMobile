@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import { getDayEntries } from '../helpers/TimeHelpers';
 import TimerMixin from 'react-timer-mixin';
-var Swipeout = require('react-native-swipeout')
+var Swipeout = require('react-native-swipeout');
 var dismissKeyboard = require('dismissKeyboard');
 var reactMixin = require('react-mixin');
 

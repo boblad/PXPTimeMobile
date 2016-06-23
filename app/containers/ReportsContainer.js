@@ -2,7 +2,7 @@
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { listInvoices, listReactBoard } from '../actions/InvoiceActions';
+import { listInvoices } from '../actions/InvoiceActions';
 import moment from 'moment';
 import React, {
   Component,
@@ -23,8 +23,10 @@ class InvoicesContainer extends Component {
 
   componentWillMount() {
     const { dispatch, user } = this.props;
-    dispatch(listInvoices(user.asyncKey));
-    dispatch(listReactBoard(user.asyncKey));
+    let startDate = moment().subtract(6, 'months').startOf('month').format('YYYY-MM-DD');
+    let endDate = moment().endOf('month').format('YYYY-MM-DD');
+
+    dispatch(listInvoices(user.asyncKey, startDate, endDate));
   }
 
   formatCurrency(num) {
