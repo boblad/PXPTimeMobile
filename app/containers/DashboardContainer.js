@@ -401,6 +401,7 @@ class DashboardContainer extends Component {
   handleSubmit() {
     const { selectedCard } = this.props.cards;
     const { dispatch, user } = this.props;
+    const { isRunning } = this.state;
     if (!_.isEmpty(selectedCard) && !_.isUndefined(this.state.timer !== '00:00:00')) {
       let body = {
         hours: this.state.hours,
@@ -410,6 +411,9 @@ class DashboardContainer extends Component {
         card_apikey: selectedCard.public.apikey
       }
       dispatch(createEntry(user.asyncKey, body));
+      if (isRunning) {
+        this.handleStop(paused=false);
+      }
       this.handleClearTime();
       this.refs.Timer.blur();
     } else {
