@@ -26,8 +26,6 @@ class ReactRND extends Component {
   }
 };
 
-const GREY = 'rgb(240, 240, 240)';
-
 var styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -42,7 +40,7 @@ var styles = StyleSheet.create({
     top: (height / 2) - 40,
     left: (width / 2) - 40,
     borderRadius: 5,
-    backgroundColor: GREY
+    backgroundColor: 'transparent'
   }
 });
 

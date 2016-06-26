@@ -171,7 +171,6 @@ class CardContainer extends Component {
             </View>
           }
         </LinearGradient>
-        <Menu router={this.props.router}/>
       </View>
     );
   }
