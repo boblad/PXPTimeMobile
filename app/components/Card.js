@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   selectListItem: {
     width: width,
     height: 50,
+    backgroundColor: colors.DARKER_GREY,
     borderColor: colors.PXP_GREY,
     borderBottomWidth: .5,
     flexDirection: 'row',
