@@ -134,7 +134,7 @@ class SignUpContainer extends Component {
                 onChangeText={this.handleTrelloChange}/>
               <Image style={styles.basicIcon} resizeMode="contain" source={require('./images/userIcon.png')} />
             </View>
-            <View style={styles.inputWrap}>
+            <View>
               <TextInput
                 autoCapitalize="none"
                 autoCorrect={false}

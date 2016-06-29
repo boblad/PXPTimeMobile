@@ -9,6 +9,8 @@ import ReportsContainer from './containers/ReportsContainer';
 import SettingsContainer from './containers/SettingsContainer';
 import RootTabContainer from './containers/RootTabContainer';
 import SignUpContainer from './containers/SignUpContainer';
+import GetRecoverContainer from './containers/GetRecoverContainer';
+import SetRecoverContainer from './containers/SetRecoverContainer';
 
 export default class MainRouter {
   constructor(navigator) {
@@ -34,17 +36,31 @@ export default class MainRouter {
     });
   }
 
-  toRootTab(props) {
-    this.push(props, {
-      title: 'Dashboard',
-      component: RootTabContainer
-    })
-  }
-
   toSignUp(props) {
     this.push(props, {
       title: 'Sign Up',
       component: SignUpContainer
+    })
+  }
+
+  toGetRecover(props) {
+    this.push(props, {
+      title: 'Recover Password',
+      component: GetRecoverContainer
+    })
+  }
+
+  toSetRecover(props) {
+    this.push(props, {
+      title: 'Set Password',
+      component: SetRecoverContainer
+    })
+  }
+
+  toRootTab(props) {
+    this.push(props, {
+      title: 'Dashboard',
+      component: RootTabContainer
     })
   }
 

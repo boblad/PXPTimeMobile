@@ -23,8 +23,8 @@ request.get = function (url, params) {
     apiUrl = `${apiUrl}?${queryString.stringify(params)}`;
   }
   return fetch(apiUrl)
-    .then((data) => {
-    })
+    .then(handleErrors)
+    .then(res=>res.json());
 };
 
 request.post = function (url, body, jwt = '') {

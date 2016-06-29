@@ -36,6 +36,7 @@ class LoginContainer extends Component {
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleTokenInputChange = this.handleTokenInputChange.bind(this);
     this.handleSignUpClick = this.handleSignUpClick.bind(this);
+    this.handleForgotPasswordClick = this.handleForgotPasswordClick.bind(this);
     this.hideModalClick = this.hideModalClick.bind(this);
     this.state = {
       email: '',
@@ -93,6 +94,10 @@ class LoginContainer extends Component {
 
   handleSignUpClick() {
     this.props.router.toSignUp();
+  }
+
+  handleForgotPasswordClick() {
+    this.props.router.toGetRecover();
   }
 
   render() {
@@ -160,6 +165,9 @@ class LoginContainer extends Component {
           <Text style={styles.orText}>- or -</Text>
           <TouchableOpacity style={styles.buttonClear} onPress={this.handleSignUpClick}>
             <Text style={styles.buttonText}>SIGN UP</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleForgotPasswordClick}>
+            <Text style={styles.orText}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
       </Image>

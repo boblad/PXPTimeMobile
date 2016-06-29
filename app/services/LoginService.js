@@ -20,4 +20,16 @@ req.loginUserWithKey = (apiKey) => {
   .then(data => data);
 }
 
+req.getRecoverKey = (username) => {
+  let url = `/users/get_recover_key/${username}/`;
+  return Request.get(url)
+  .then(data => data);
+}
+
+req.setRecoverKey = (data) => {
+  let url = `/users/set_recover/`;
+  return Request.post(url, data)
+  .then(data => data);
+}
+
 exports.req = req;
