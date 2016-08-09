@@ -1,4 +1,4 @@
-import { LIST_INVOICE_SUCCESS } from '../constants/actionTypes';
+import { LIST_INVOICE_SUCCESS, CLEAR_INVOICES } from '../constants/actionTypes';
 
 const initialState = {
   results: [],
@@ -15,6 +15,8 @@ export default function invoices(state = initialState, action = {}) {
         page_count: action.page_count,
         current_page: state.current_page++
       };
+    case CLEAR_INVOICES:
+      return initialState
     default:
       return state;
   }

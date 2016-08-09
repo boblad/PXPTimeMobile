@@ -1,6 +1,6 @@
 import InvoiceService from '../services/InvoiceService';
 import { toggleIsLoading } from './LoadingActions';
-import { LIST_INVOICE_SUCCESS } from '../constants/actionTypes';
+import { LIST_INVOICE_SUCCESS, CLEAR_INVOICES } from '../constants/actionTypes';
 import config from '../config';
 
 const listInvoiceSuccess = (results) => {
@@ -11,9 +11,22 @@ const listInvoiceSuccess = (results) => {
   }
 }
 
+const clearInvoices = () => {
+  return {
+    type: CLEAR_INVOICES
+  }
+}
+
+export const clearAllInvoices = () => {
+  return (dispatch) => {
+    dispatch(clearInvoices());
+  }
+}
+
 export const listInvoices = (key, startDate, endDate, page=1) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
+    dispatch(clearInvoices());
     InvoiceService.req.listInvoices(key, startDate, endDate, page)
     .then((invoices) => {
       dispatch(listInvoiceSuccess(invoices));
@@ -29,10 +42,11 @@ export const listAllInvoices = (key, startDate, endDate) => {
   return (dispatch, getState) => {
     const currentState = getState();
     dispatch(toggleIsLoading(true));
+    dispatch(clearInvoices());
     InvoiceService.req.listInvoices(key, startDate, endDate, 1)
     .then((invoices) => {
       const pages = invoices.page_count;
-      for (i = 0; i < pages; i++) {
+      for (i = 1; i <= pages; i++) {
         dispatch(listInvoices(key, startDate, endDate, i))
       }
     })

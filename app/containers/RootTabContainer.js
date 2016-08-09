@@ -10,9 +10,11 @@ import InvoicesContainer from './InvoicesContainer';
 import ReportsContainer from './ReportsContainer';
 import SettingsContainer from './SettingsContainer';
 import WeekContainer from './WeekContainer';
+import { listAllInvoices } from '../actions/InvoiceActions';
 
 import TabNavigator from 'react-native-tab-navigator';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { colors } from '../constants/colors';
 
@@ -66,7 +68,15 @@ class RootTabContainer extends Component {
           titleStyle={{ color: colors.BLACK }}
           renderIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/reportsIcon.png')} />}
           renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 25}} source={require('./images/reportsIconLight.png')} />}
-          onPress={() => this.setState({ selectedTab: 'reports' })}>
+          onPress={() => {
+              const { dispatch, user } = this.props;
+              let startDate = moment().subtract(6, 'months').startOf('month').format('YYYY-MM-DD');
+              let endDate = moment().endOf('month').format('YYYY-MM-DD');
+
+              dispatch(listAllInvoices(user.asyncKey, startDate, endDate));
+              this.setState({ selectedTab: 'reports' })
+            }
+          }>
           <ReportsContainer {...this.props} />
         </TabNavigator.Item>
         <TabNavigator.Item
