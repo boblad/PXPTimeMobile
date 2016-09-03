@@ -493,7 +493,7 @@ const styles = StyleSheet.create({
   },
   bottomContent: {
     width: width,
-    height: (height - ((height/3) + 40) - 50)
+    height: (height - (height/3 + 40) - 50 - 96)
   },
   buttonWrap: {
     width: width,
