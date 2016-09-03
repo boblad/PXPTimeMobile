@@ -55,7 +55,7 @@ class WeekContainer extends Component {
       endDate: endDate,
       weeklyEntries: weeklyEntries
     })
-    dispatch(listAllEntries(user.asyncKey, startDate, endDate));
+    // dispatch(listAllEntries(user.asyncKey, startDate, endDate));
   }
 
   handleDeleteEntry(entryApiKey) {

@@ -56,6 +56,7 @@ export const createEntry = (key, entryApiKey, page=1) => {
       dispatch(toggleIsLoading(false));
       dispatch(clearBoard());
       dispatch(clearCard());
+      dispatch(clearEntries());
       dispatch(listEntries(key, startDate, endDate, page));
       dispatch(setSuccessMessage('Entry Created'));
     })
@@ -74,6 +75,7 @@ export const deleteEntry = (key, body, page=1) => {
       let startDate = moment().format('YYYY-MM-DD');
       let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
       dispatch(toggleIsLoading(false));
+      dispatch(clearEntries());
       dispatch(listEntries(key, startDate, endDate, page));
       dispatch(setSuccessMessage('Entry Deleted'));
     })

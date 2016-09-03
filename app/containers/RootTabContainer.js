@@ -10,6 +10,7 @@ import InvoicesContainer from './InvoicesContainer';
 import ReportsContainer from './ReportsContainer';
 import SettingsContainer from './SettingsContainer';
 import WeekContainer from './WeekContainer';
+import { listAllEntries } from '../actions/EntryActions';
 import { listAllInvoices } from '../actions/InvoiceActions';
 
 import TabNavigator from 'react-native-tab-navigator';
@@ -48,7 +49,15 @@ class RootTabContainer extends Component {
           titleStyle={{ color: colors.BLACK }}
           renderIcon={() => <Image resizeMode="contain" style={{height: 23}} source={require('./images/weeklyIcon.png')} />}
           renderSelectedIcon={() => <Image resizeMode="contain" style={{height: 23}} source={require('./images/weeklyIconLight.png')} />}
-          onPress={() => this.setState({ selectedTab: 'weekly' })}>
+          onPress={() => {
+              const { dispatch, user } = this.props;
+              let startDate = moment().day('Monday').hours(0).minutes(0).seconds(0).format('YYYY-MM-DD');
+              let endDate = moment().add(2, 'days').format('YYYY-MM-DD');
+
+              dispatch(listAllEntries(user.asyncKey, startDate, endDate));
+              this.setState({ selectedTab: 'weekly' })
+            }
+          }>
           <WeekContainer {...this.props} />
         </TabNavigator.Item>
         <TabNavigator.Item
