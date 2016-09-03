@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { connect } from 'react-redux';
 import _ from 'lodash';
-import { listEntries, clearEntries, deleteEntry } from '../actions/EntryActions';
+import { listEntries, listAllEntries, clearEntries, deleteEntry } from '../actions/EntryActions';
 import Menu from '../components/Menu';
 import TopBar from '../components/TopBar';
 import Loader from '../components/Loader';
@@ -55,7 +55,7 @@ class WeekContainer extends Component {
       endDate: endDate,
       weeklyEntries: weeklyEntries
     })
-    dispatch(listEntries(user.asyncKey, startDate, endDate));
+    dispatch(listAllEntries(user.asyncKey, startDate, endDate));
   }
 
   handleDeleteEntry(entryApiKey) {

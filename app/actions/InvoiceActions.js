@@ -38,7 +38,7 @@ export const listInvoices = (key, startDate, endDate, page=1) => {
   }
 }
 
-export const listAllInvoices = (key, startDate, endDate) => {
+export const listAllInvoices = (key, startDate, endDate, page=1) => {
   return (dispatch, getState) => {
     const currentState = getState();
     dispatch(toggleIsLoading(true));

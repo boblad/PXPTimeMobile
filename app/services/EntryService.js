@@ -2,8 +2,8 @@ import Request from './Request';
 
 let req = {};
 
-req.listEntries = (apiKey, startDate, endDate) => {
-  let url = `/entries?start=${startDate}&end=${endDate}`;
+req.listEntries = (apiKey, startDate, endDate, page=1) => {
+  let url = `/entries?start=${startDate}&end=${endDate}&page=${page}`;
   return Request.protectedGet(url, apiKey)
   .then(data => data);
 }
