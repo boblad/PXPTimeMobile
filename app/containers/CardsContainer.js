@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { listCards, selectCard } from '../actions/CardActions';
 import _ from 'lodash';
 import Card from '../components/Card';
-import BoardTitle from '../components/BoardTitle';
 import Menu from '../components/Menu';
-import React, {
-  Component,
+import React, { Component, PropTypes } from 'react';
+import {
   Dimensions,
   Image,
   ScrollView,

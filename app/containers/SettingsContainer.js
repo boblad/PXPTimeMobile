@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { clearUser } from '../actions/LoginActions';
 import Menu from '../components/Menu';
 import moment from 'moment';
-import React, {
-  Component,
+import React, { Component, PropTypes } from 'react';
+import {
   Dimensions,
   ScrollView,
   StyleSheet,

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes, View, Text, TouchableOpacity } from 'react-native';
+import React, { Component, PropTypes } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from '../assets/StyleSheet';
 
 const propTypes = {

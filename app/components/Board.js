@@ -1,20 +1,19 @@
-import React, {
-  Component,
+import React, { Component, PropTypes } from 'react';
+import {
   Dimensions,
   Image,
-  PropTypes,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
 
-const propTypes = {
-  board: PropTypes.object.isRequired,
-  onBoardClick: PropTypes.func.isRequired
-};
+// const propTypes = {
+//   board: PropTypes.object.isRequired,
+//   onBoardClick: PropTypes.func.isRequired
+// };
 
-class Card extends Component {
+class Board extends Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
@@ -71,6 +70,6 @@ const styles = StyleSheet.create({
   }
 });
 
-Card.propTypes = propTypes;
+// Board.propTypes = propTypes;
 
-export default Card;
+export default Board;

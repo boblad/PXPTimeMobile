@@ -7,10 +7,11 @@ import TopBar from '../components/TopBar';
 import Loader from '../components/Loader';
 import timeIcon from './images/timeIconLight.png';
 import { getDayEntries, toTimeString } from '../helpers/TimeHelpers';
-import React, {
+import React, { Component, PropTypes } from 'react';
+import {
   View, Text, StyleSheet, ScrollView,
   TouchableHighlight, Image, Dimensions,
-  Component, StatusBar, Animated, LayoutAnimation,
+  StatusBar, Animated, LayoutAnimation,
   TouchableOpacity, TextInput,
   UIManager
 } from 'react-native';

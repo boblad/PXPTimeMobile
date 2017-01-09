@@ -1,5 +1,3 @@
-'use strict';
-
 import { bindActionCreators } from 'redux';
 
 import { iconStyles } from '../assets/IconStyles';
@@ -11,10 +9,10 @@ import config from '../config';
 //import ActivityIndicator from '../Common/ActivityIndicator/';
 import Success from '../components/alerts/Success';
 import Failure from '../components/alerts/Failure';
-import React, {
+import React, { Component } from 'react';
+import {
   ActivityIndicatorIOS,
   AsyncStorage,
-  Component,
   Dimensions,
   Image,
   Modal,
@@ -38,6 +36,7 @@ class LoginContainer extends Component {
     this.handleSignUpClick = this.handleSignUpClick.bind(this);
     this.handleForgotPasswordClick = this.handleForgotPasswordClick.bind(this);
     this.hideModalClick = this.hideModalClick.bind(this);
+    this.loadInitState = this.loadInitState.bind(this);
     this.state = {
       email: '',
       password: '',
@@ -46,18 +45,25 @@ class LoginContainer extends Component {
     }
   }
 
-  componentWillMount() {
-    AsyncStorage.getItem('apikey').then((key) => {
-      if (key) {
-        this.props.dispatch(setApiKey(key));
-        this.props.router.toRootTab();
-      }
-    }).done();
+  componentWillMount () {
+    this.loadInitState().done()
     this.setState({
       email: '',
       password: '',
       showTokenLogin: false
     })
+  }
+
+  loadInitState = async () => {
+    try {
+      let key = await AsyncStorage.getItem('apikey');
+      if (key != null) {
+        this.props.dispatch(setApiKey(key));
+        this.props.router.toRootTab();
+      }
+    } catch (err) {
+      console.log('er', err)
+    }
   }
 
   handleUserNameChange(text) {

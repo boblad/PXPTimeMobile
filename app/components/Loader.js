@@ -1,4 +1,5 @@
-import React, { Component, Modal, ActivityIndicatorIOS, View } from 'react-native';
+import { Modal, ActivityIndicatorIOS, View } from 'react-native';
+import React, { Component, PropTypes } from 'react';
 import { activityStyles } from '../assets/ActivityStyle';
 import { BLUE } from '../constants/colors';
 

@@ -1,20 +1,16 @@
-import { bindActionCreators } from 'redux';
+import React, { Component } from 'react';
 import { helperStyles } from '../assets/HelperStyles';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import { listBoards, selectBoard } from '../actions/BoardActions';
 import Board from '../components/Board';
-import Menu from '../components/Menu';
-import TopBar from '../components/TopBar';
-import React, {
+import {
   AsyncStorage,
-  Component,
   Dimensions,
   Image,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View
 } from 'react-native';
@@ -28,9 +24,7 @@ class BoardsContainer extends Component {
 
   componentWillMount() {
     const { dispatch, user } = this.props;
-    AsyncStorage.getItem('apikey').then((value) => {
-      dispatch(listBoards(value));
-    }).done()
+    dispatch(listBoards(user.asyncKey));
   }
 
   render() {
@@ -39,8 +33,7 @@ class BoardsContainer extends Component {
       <View style={styles.mainContainer}>
         <View style={styles.navWrapper}>
           <TouchableOpacity
-            onPress={() => this.props.router.pop()}
-          >
+            onPress={() => this.props.router.pop()}>
             <Image style={styles.backIcon} resizeMode="contain" source={require('./images/backIcon.png')} />
           </TouchableOpacity>
           <View style={styles.navTitle}>
@@ -54,7 +47,7 @@ class BoardsContainer extends Component {
                 let selected = false;
                 if (!_.isUndefined(selectedBoard.public) && selectedBoard.public.apikey === board.public.apikey) {
                   selected = true;
-                };
+                }
                 return (
                   <Board key={index} onBoardClick={this.handleBoardClick} board={board} selected={selected} />
                 )

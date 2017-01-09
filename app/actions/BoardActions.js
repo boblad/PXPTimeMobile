@@ -19,10 +19,12 @@ export const listBoards = (key) => {
     dispatch(toggleIsLoading(true));
     BoardService.req.listBoards(key)
     .then((projects) => {
+      console.log('project', projects)
       dispatch(listBoardsSuccess(projects));
       dispatch(toggleIsLoading(false));
     })
     .catch((err) => {
+      console.log('err', err)
       dispatch(toggleIsLoading(false));
     })
   }

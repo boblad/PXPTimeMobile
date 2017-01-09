@@ -1,9 +1,8 @@
 import moment from 'moment';
-import React, {
-  Component,
+import React, { Component, PropTypes } from 'react';
+import {
   Dimensions,
   Image,
-  PropTypes,
   StyleSheet,
   Text,
   TouchableOpacity,

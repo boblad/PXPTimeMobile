@@ -6,9 +6,9 @@ import moment from 'moment';
 import Menu from '../components/Menu';
 import TopBar from '../components/TopBar';
 import InvoiceCard from '../components/InvoiceCard';
-import React, {
+import React, { Component, PropTypes } from 'react';
+import {
   StyleSheet,
-  Component,
   View,
   ScrollView,
   Text,

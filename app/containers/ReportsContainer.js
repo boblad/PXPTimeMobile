@@ -3,8 +3,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import React, {
-  Component,
+import React, { Component, PropTypes } from 'react';
+import {
   Dimensions,
   ScrollView,
   StyleSheet,
@@ -21,7 +21,7 @@ class InvoicesContainer extends Component {
   }
 
   componentWillMount() {
-    
+
   }
 
   formatCurrency(num) {

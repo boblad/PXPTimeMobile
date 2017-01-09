@@ -15,9 +15,9 @@ import TopBar from '../components/TopBar';
 import Success from '../components/alerts/Success';
 import Failure from '../components/alerts/Failure';
 import LinearGradient from 'react-native-linear-gradient';
-import React, {
+import React, { Component, PropTypes } from 'react';
+import {
   StyleSheet,
-  Component,
   View,
   ScrollView,
   Text,

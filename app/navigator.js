@@ -4,7 +4,6 @@ import RootTabContainer from './containers/RootTabContainer';
 import MainRouter from './router';
 
 import {
-  AppRegistry,
   AsyncStorage,
   BackAndroid,
   Navigator,
@@ -24,17 +23,23 @@ var styles = StyleSheet.create({
 class MainNavigator extends Component{
   constructor(props) {
     super(props);
+    this.loadInitState = this.loadInitState.bind(this)
     this.state = {
       initialRoute: null
     };
   }
 
-  componentWillMount() {
+  componentWillMount () {
+    this.loadInitState().done()
+  }
+
+  loadInitState = async () => {
     let initialRoute = {
       title: 'Dashboard',
       component: RootTabContainer
     };
-    AsyncStorage.getItem('apikey').then((value) => {
+    try {
+      let value = await AsyncStorage.getItem('apikey');
       if (value === null) {
         initialRoute = {
           title: 'Time Tracker',
@@ -45,7 +50,10 @@ class MainNavigator extends Component{
       this.setState({
         initialRoute,
       })
-    });
+    } catch (err) {
+      console.log('er', err)
+    }
+
   }
 
   componentDidMount() {

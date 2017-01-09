@@ -8,12 +8,11 @@ import TimerMixin from 'react-timer-mixin';
 var Swipeout = require('react-native-swipeout');
 var dismissKeyboard = require('dismissKeyboard');
 var reactMixin = require('react-mixin');
-
-import React, {
+import React, { Component, PropTypes } from 'react';
+import {
   Alert,
   AppState,
   AsyncStorage,
-  Component,
   Dimensions,
   Image,
   ScrollView,
@@ -51,24 +50,35 @@ class DashboardContainer extends Component {
     this.handleAppBackground = this.handleAppBackground.bind(this);
     this.handleAppForeground = this.handleAppForeground.bind(this);
     this.getEntries = this.getEntries.bind(this);
-    AsyncStorage.getItem('state').then((value) => {
-      if (_.isUndefined(value) || value === null) {
-        this.state = {
-          timer: '00:00:00',
-          startTime: null,
-          endTime: null,
-          isRunning: false,
-          currentAppState: AppState.currentState,
-          backgroundTime: '',
-          lastTick: '',
-          paused: true
+    this.loadInitState = this.loadInitState.bind(this);
+    this.loadInitComponent = this.loadInitComponent.bind(this);
+    this.loadInitState().done();
+
+  }
+
+  loadInitState = async () => {
+    try {
+      var value = await AsyncStorage.getItem('state')
+        if (_.isUndefined(value) || value === null) {
+          this.state = {
+            timer: '00:00:00',
+            startTime: null,
+            endTime: null,
+            isRunning: false,
+            currentAppState: AppState.currentState,
+            backgroundTime: '',
+            lastTick: '',
+            paused: true
+          }
+        } else {
+          oldState = JSON.parse(value);
+          this.state = oldState;
+          this.handleAppForeground();
         }
-      } else {
-        oldState = JSON.parse(value);
-        this.state = oldState;
-        this.handleAppForeground();
-      }
-    }).done()
+    } catch (err) {
+      console.log('err', err)
+    }
+
   }
 
   componentWillMount() {
@@ -82,12 +92,20 @@ class DashboardContainer extends Component {
     if (!_.isUndefined(user.asyncKey) && user.asyncKey !== null) {
       dispatch(listEntries(user.asyncKey, startDate, endDate));
     } else {
-      AsyncStorage.getItem('apikey').then((key) => {
+
+      this.loadInitComponent().done();
+    }
+  }
+
+  loadInitComponent = async () => {
+    try {
+      let key = await AsyncStorage.getItem('apikey');
         if (key) {
           this.props.dispatch(setApiKey(key));
           dispatch(listEntries(key, startDate, endDate));
         }
-      }).done();
+    } catch (err) {
+      console.log('err', err)
     }
   }
 
@@ -116,7 +134,15 @@ class DashboardContainer extends Component {
       this.handleStop(paused=false);
     }
     if (this.state.timer !== '00:00:00') {
-      AsyncStorage.setItem('state', JSON.stringify(this.state));
+      this.handleAsyncSet(this.state).done();
+    }
+  }
+
+  handleAsyncSet = async (currentState) => {
+    try {
+      await AsyncStorage.setItem('state', JSON.stringify(this.state));
+    } catch (err) {
+      console.log('err', err)
     }
   }
 
@@ -147,7 +173,11 @@ class DashboardContainer extends Component {
 
       this.handleStart();
     }
-    AsyncStorage.removeItem('state');
+    this.handleAsyncRemove().done();
+  }
+
+  handleAsyncRemove = async () => {
+    await AsyncStorage.removeItem('state');
   }
 
   handleStart() {

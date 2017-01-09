@@ -12,10 +12,11 @@ import Success from '../components/alerts/Success';
 import Failure from '../components/alerts/Failure';
 import LoginService from '../services/LoginService';
 
-import React, {
+import React, { Component, PropTypes } from 'react';
+
+import {
   ActivityIndicatorIOS,
   AsyncStorage,
-  Component,
   Dimensions,
   Image,
   Modal,

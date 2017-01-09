@@ -1,5 +1,5 @@
-import React, {
-  Component, PropTypes, Modal,
+import React, { Component, PropTypes } from 'react';
+import {  Modal,
   View, TouchableHighlight, Text,
   Image
 } from 'react-native';

@@ -10,11 +10,11 @@ import pxpLogo from './images/pxpLogo.png';
 import config from '../config';
 import Success from '../components/alerts/Success';
 import Failure from '../components/alerts/Failure';
-import React, {
+import React, { Component, PropTypes } from 'react';
+import {
   ActivityIndicatorIOS,
   Alert,
   AsyncStorage,
-  Component,
   Dimensions,
   Image,
   Modal,
